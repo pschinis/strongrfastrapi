@@ -2,6 +2,7 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
+  -json
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -42,27 +43,31 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 
 ## Create a Client
 
-This endpoint creates a new client.
-
+> Minimal Create Client Request If Delivering via PDF
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{  
+  "user": {  
+    "first_name": "John",  
+    "last_name": "Smith"
+  }  
+}
 ```
+
+> Minimal Create Client Request If Delivering via App/Web
+
+```json
+{  
+  "user": {  
+    "first_name": "John",  
+    "last_name": "Smith",
+    "email": "johnsmith@example.com"
+  }  
+}
+```
+
+This endpoint creates a new client.
+
 
 ### HTTP Request
 
@@ -170,19 +175,6 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 	-   **compare_type** *string* (required) - must be one of:
 		-   at_least - the client should be eating AT LEAST the specified amount of the macronutrient 
 		-   at_most - the client should be eating AT MOST the specified amount of the macronutrient
-
-### Examples
-
-#### Minimal Create Client Request
-
-`json
-    {  
-        "user": {  
-			"first_name": "John",  
-			"last_name": "Smith"
-		}  
-	}
-`
 
 
 
