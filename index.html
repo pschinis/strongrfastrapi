@@ -295,7 +295,7 @@
     </script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -304,12 +304,6 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo-1e815a84.png" class="logo" alt="" />
-        <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
-        </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
@@ -322,16 +316,13 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#content-type" class="toc-h1 toc-link" data-title="Content Type">Content Type</a>
+          </li>
+          <li>
+            <a href="#clients" class="toc-h1 toc-link" data-title="Clients">Clients</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
-                  </li>
-                  <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
-                  </li>
-                  <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#create-a-client" class="toc-h2 toc-link" data-title="Create a Client">Create a Client</a>
                   </li>
               </ul>
           </li>
@@ -348,59 +339,19 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
-
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/slatedocs/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<p>The Strongr Fastr for Professionals API allows enterprise users to programmatically create new clients in Strongr Fastr. Currently, client creation is the only publicly available endpoint. If your business needs something more please contact <a href="mailto:philip@strongrfastr.com">philip@strongrfastr.com</a>. The API is a work in progress and we&#39;re happy to help.</p>
 <h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>Authenticate each request by setting the Authorization header of the request to your API key as follows:</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p><code>Authorization: YOUR_API_KEY</code></p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+<p>If you are the primary owner of the account and your account has been activated for API access your API Key should be visible within the app under Menu &gt; Account. To get activated for API access contact <a href="mailto:philip@strongrfastr.com">philip@strongrfastr.com</a>.</p>
+<h1 id='content-type'>Content Type</h1>
+<p>Requests to the API should have a JSON body and content-type (‘application/json’). All responses from the API will also have a JSON body and content-type.</p>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">();</span>
-</code></pre></div>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
+<p><code>Content-Type: application/json</code></p>
+<h1 id='clients'>Clients</h1><h2 id='create-a-client'>Create a Client</h2>
+<p>This endpoint creates a new client.</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
@@ -417,115 +368,138 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
     </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
-</span></code></pre></div>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
+</span></code></pre></div><h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://www.strongrfastr.com/en/api/v1/trainers/create_client</code></p>
+<h3 id='request-body'>Request Body</h3>
+<ul>
+<li>  <strong>user</strong> <em>object</em> (required) - the <a href="#user-object">user object</a> with details (e.g. name, age, height, weight, etc) for the client being created</li>
+<li>  <strong>trainer_identifier</strong> <em>string</em> (optional) - the id or email address of the trainer/team member to whom this client should be assigned. If left blank, the client will be assigned to the account owner</li>
+<li>  <strong>type</strong> <em>string</em> (optional) - if specified must be one of:
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<ul>
+<li>  invite (if delivering plans via the app/website an invite will get sent to the client’s email address)</li>
+<li>  create (default - creates the client without sending an invite)</li>
+</ul></li>
+<li>  <strong>generate_meal_plan</strong> <em>boolean</em> (optional) - if set to true, the client’s first meal plan will automatically be generated after the client is created. This will fail unless the meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types fields are all set in the <a href="#user-object">user object</a>.</li>
+<li>  <strong>suppress_notification_email</strong> <em>boolean</em> (optional) - by default an email will be sent to the new client’s trainer after the client is created. Setting this flag to true prevents that email from being sent.</li>
+</ul>
+<h3 id='user-object'><a id="user-object"></a>User Object</h3><h4 id='basic-fields'>Basic Fields</h4>
+<p>When creating a client, if you provide a first_name, last_name, gender, age, height (foot_height/inch_height or metric_height), weight (current_weight or metric_weight), weight_goal, and activity_level, then the manual “Set Up Client” step can be skipped within the app.</p>
+
+<ul>
+<li>  <strong>first_name</strong> <em>string</em> (required) - the client’s first name</li>
+<li>  <strong>last_name</strong> <em>string</em> (required) - the client’s last name</li>
+<li>  <strong>email</strong> <em>string</em> (optional if you’re delivering plans via “pdf”, required otherwise) - client’s email address</li>
+<li>  <strong>gender</strong> <em>integer</em> (optional) - 0 for male, 1 for female</li>
+<li>  <strong>age</strong> <em>integer</em> (optional) - the client’s age as an integer, must be &gt;= 18 and &lt;= 99</li>
+<li>  <strong>foot_height</strong> <em>integer</em>, <strong>inch_height</strong> <em>number</em> (optional) - the client’s height in feet and inches. inch_height should be blank or a number &gt;= 0 and &lt; 12. foot_height must be an integer. Total height must be between 2’6” and 8’</li>
+<li>  <strong>metric_height</strong> <em>number</em> (optional) - the client’s height in centimeters. This field is ignored if foot_height or inch_height are present. Must be between 77 and 243 cm.</li>
+<li>  <strong>current_weight</strong> <em>number</em> (optional) - the client’s current weight in lbs. Must be &gt;= 60 and &lt;= 800</li>
+<li>  <strong>metric_weight</strong> <em>number</em> (optional) - the client’s weight in kgs. Must be between 28 and 363 kgs. This field is ignored if current_weight is present</li>
+<li>  <strong>weight_goal</strong> <em>integer</em> (optional) - the client’s weight goal. Must be either -1 (lose weight), 0 (maintain/tone), or 1 (gain weight).</li>
+<li>  <strong>activity_level</strong> <em>integer</em> (optional) - must be one of:
+
+<ul>
+<li>  0 (for sedentary)</li>
+<li>  1 (for lightly active)</li>
+<li>  2 (for moderately active)</li>
+<li>  3 (for heavily active)</li>
+<li>  4 (for extremely active)</li>
+</ul></li>
+</ul>
+<h4 id='meal-plan-fields'>Meal Plan Fields</h4>
+<aside class="notice">
+If any of these fields are provided then the basic fields are required.
 </aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p>If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types then the manual meal plan settings setup step for the client can be skipped within the app.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+<ul>
+<li><p><strong>setup_own_mp_prefs</strong> <em>boolean</em> (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite. Does nothing if you’re delivering plans via PDF.</p></li>
+<li><p><strong>meal_plan_weekday</strong> <em>integer</em> (optional) - indicates which weekday should be the first day of the client’s meal plan each week. If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED. Must be one of:</p>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This endpoint retrieves a specific kitten.</p>
+<ul>
+<li>  0 (for Sunday)</li>
+<li>  1 (for Monday)</li>
+<li>  2 (for Tuesday)</li>
+<li>  3 (for Wednesday)</li>
+<li>  4 (for Thursday)</li>
+<li>  5 (for Friday)</li>
+<li>  6 (for Saturday)</li>
+</ul></li>
+<li><p><strong>diet_type</strong> <em>integer</em> (optional) - must be one of:</p>
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<ul>
+<li>  0 (for no restriction)</li>
+<li>  1 (for pescetarian)</li>
+<li>  2 (for vegetarian)</li>
+<li>  3 (for paleo)</li>
+<li>  4 (for keto)</li>
+<li>  5 (for vegan)</li>
+</ul></li>
+<li><p><strong>budget</strong> <em>integer</em> (optional) - an integer (0,1,2, or 3) indicating how high the client’s grocery budget is. 0 for the lowest possible budget and 3 for the highest. Generally this field should be maxed out to increase variety, but can also be a good way to modulate expenses for cost-sensitive clients</p></li>
+<li><p><strong>weekly_variety</strong> <em>integer</em> (optional) - an integer (0,1,2, or 3) indicating how much variety to include in the client’s meal plan (i.e. how often to switch up meals vs repeating them/eating leftovers meal prep style). 0 for the least amount of variety and the least amount of cooking, 3 for the most variety and most cooking.</p></li>
+<li><p><strong>complexity_preference</strong> <em>integer</em> (optional) - an integer (0,1,2, or 3) indicating the maximum level of recipe complexity to include in this client’s plan. Recipe complexity is a qualitative metric determined by ingredient counts and total time required by a recipe. 0 is the least complex and 3 is the most. Note that restricting complexity too much can reduce variety in the meal plan.</p></li>
+<li><p><a id="selected-meal-types"></a><strong>selected_meal_types</strong> <em>array of strings</em> (optional) - an array indicating which meals to include in the client’s plan each day. At least two meal types must be specified. Possible values are:</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<ul>
+<li>  breakfast</li>
+<li>  lunch</li>
+<li>  dinner</li>
+<li>  snack</li>
+</ul></li>
+<li><p><strong>excluded_keywords</strong> <em>string</em> (optional) - a comma-separated list of tags used for food allergy exclusions. Possible tags are:</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span> <span class="se">\</span>
-  <span class="nt">-X</span> DELETE <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+<ul>
+<li>  dairy1 (excludes high-lactose dairy from the meal plan)</li>
+<li>  dairy2 (excludes all dairy from the meal plan)</li>
+<li>  egg1 (excludes eggs from the meal plan)</li>
+<li>  peanut1 (excludes peanuts from the meal plan)</li>
+<li>  tree_nuts (excludes tree nuts from the meal plan)</li>
+<li>  soy1 (excludes soy from the meal plan)</li>
+<li>  gluten1 (excludes gluten from the meal plan)</li>
+<li>  fish1 (excludes fish from the meal plan)</li>
+<li>  shellfish1 (excludes shellfish from the meal plan)</li>
+</ul></li>
+<li><p><strong>extra_keywords</strong> <em>string</em> (optional) - a comma separated list of free-text keywords/phrases to exclude from the meal plan. For example, if this was set to “brussels sprouts,beef” the meal plan would never include any recipes whose name, description, or ingredients included the keyword “brussels sprouts” or “beef”. Important: these keywords should be as specific as possible. For example, instead of setting the field to “nightshade” you should set it to “tomato,pepper,potato,eggplant”.</p></li>
+<li><p><strong>meal_type_daily_percentages</strong> <em>object</em> (optional) - an object whose keys are the meal types included in <a href="#selected-meal-types">selected_meal_types</a> and values are the percentage of the client’s daily calories that should be allocated to that meal type. For example, a value of { “breakfast”: 20, “lunch”: 30, “dinner”: 50 } would tell the meal planner to allocate 20%, 30%, and 50% of the client’s daily calories to breakfast, lunch, and dinner respectively.</p></li>
+<li><p><strong>override_calories</strong> <em>boolean</em> (optional) - if set to true, the meal planner will use the calorie goal specified in calorie_override for this client’s meal plan. Otherwise, calorie_override will be ignored and the client’s calorie goal will be calculated automatically based on their profile.</p></li>
+<li><p><strong>calorie_override</strong> <em>integer</em> (optional) - the client’s daily caloric needs. Must be between 600 and 5500 if specified. If this is not specified, or override_calories is not set to true, the client’s daily calories are calculated automatically based on their profile.</p></li>
+<li><p><strong>fiber_goal</strong> <em>integer</em> (optional) - how many grams of fiber the client should be eating per day. Must be between 0 and 40.</p></li>
+<li><p><strong>macro_parameters</strong> <em>array of objects</em> (optional) - an array representing the client’s daily macronutrient targets. Each object in the array represents a single macronutrient and its daily target. You can specify targets for up to two macronutrients. If an empty array is set, the client’s macro goals will be calculated automatically based on their profile. Each object should have the following fields:</p>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
-</tr>
-</tbody></table>
+<ul>
+<li>  <strong>macro</strong> <em>string</em> (required) - the macro whose daily target is being specified. Must be one of:
+
+<ul>
+<li>  protein</li>
+<li>  carbs</li>
+<li>  fat</li>
+</ul></li>
+<li>  <strong>amount</strong> <em>number</em> (required) - how much of the specified macro the client should be eating each day. This will either be interpreted as a percent of the client’s daily calories or a gram amount, depending on the value of unit_type.</li>
+<li>  <strong>unit_type</strong> <em>integer</em> (required) - must be one of:
+
+<ul>
+<li>  0 - the amount field will be interpreted as grams</li>
+<li>  1 - the amount field will be interpreted as a percentage of the client’s daily calories</li>
+</ul></li>
+<li>  <strong>compare_type</strong> <em>string</em> (required) - must be one of:
+
+<ul>
+<li>  at_least - the client should be eating AT LEAST the specified amount of the macronutrient </li>
+<li>  at_most - the client should be eating AT MOST the specified amount of the macronutrient</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id='examples'>Examples</h3><h4 id='minimal-create-client-request'>Minimal Create Client Request</h4>
+<p><code>json
+    {  
+        &quot;user&quot;: {  
+            &quot;first_name&quot;: &quot;John&quot;,  
+            &quot;last_name&quot;: &quot;Smith&quot;
+        }  
+    }
+</code></p>
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
@@ -587,12 +561,6 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 
       </div>
       <div class="dark-box">
-          <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
-          </div>
       </div>
     </div>
   </body>
