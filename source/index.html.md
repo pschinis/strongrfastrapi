@@ -2,10 +2,6 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -23,85 +19,31 @@ meta:
     content: Documentation for the Kittn API
 ---
 
+
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+The Strongr Fastr for Professionals API allows enterprise users to programmatically create new clients in Strongr Fastr. Currently, client creation is the only publicly available endpoint. If your business needs something more please contact [philip@strongrfastr.com](mailto:philip@strongrfastr.com). The API is a work in progress and we're happy to help.
 
 # Authentication
 
-> To authorize, use this code:
+Authenticate each request by setting the Authorization header of the request to your API key as follows:
 
-```ruby
-require 'kittn'
+`Authorization: YOUR_API_KEY`
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+If you are the primary owner of the account and your account has been activated for API access your API Key should be visible within the app under Menu > Account. To get activated for API access contact [philip@strongrfastr.com](mailto:philip@strongrfastr.com).
 
-```python
-import kittn
+# Content Type
 
-api = kittn.authorize('meowmeowmeow')
-```
+Requests to the API should have a JSON body and content-type (‘application/json’). All responses from the API will also have a JSON body and content-type.
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
+`Content-Type: application/json`
 
-```javascript
-const kittn = require('kittn');
+# Clients
 
-let api = kittn.authorize('meowmeowmeow');
-```
+## Create a Client
 
-> Make sure to replace `meowmeowmeow` with your API key.
+This endpoint creates a new client.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
 
 ```json
 [
@@ -122,124 +64,125 @@ let kittens = api.kittens.get();
 ]
 ```
 
-This endpoint retrieves all kittens.
-
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`POST https://www.strongrfastr.com/en/api/v1/trainers/create_client`
 
-### Query Parameters
+### Request Body
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+-   **user** *object* (required) - the [user object](#user-object) with details (e.g. name, age, height, weight, etc) for the client being created
+-   **trainer_identifier** *string* (optional) - the id or email address of the trainer/team member to whom this client should be assigned. If left blank, the client will be assigned to the account owner
+-   **type** *string* (optional) - if specified must be one of:
+	-   invite (if delivering plans via the app/website an invite will get sent to the client’s email address)
+	-   create (default - creates the client without sending an invite)
+-   **generate_meal_plan** *boolean* (optional) - if set to true, the client’s first meal plan will automatically be generated after the client is created. This will fail unless the meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types fields are all set in the [user object](#user-object).
+-   **suppress_notification_email** *boolean* (optional) - by default an email will be sent to the new client’s trainer after the client is created. Setting this flag to true prevents that email from being sent.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+### <a id="user-object"></a>User Object
+
+#### Basic Fields
+When creating a client, if you provide a first_name, last_name, gender, age, height (foot_height/inch_height or metric_height), weight (current_weight or metric_weight), weight_goal, and activity_level, then the manual “Set Up Client” step can be skipped within the app.
+
+-   **first_name** *string* (required) - the client’s first name
+-   **last_name** *string* (required) - the client’s last name
+-   **email** *string* (optional if you’re delivering plans via “pdf”, required otherwise) - client’s email address
+-   **gender** *integer* (optional) - 0 for male, 1 for female
+-   **age** *integer* (optional) - the client’s age as an integer, must be >= 18 and <= 99
+-   **foot_height** *integer*, **inch_height** *number* (optional) - the client’s height in feet and inches. inch_height should be blank or a number >= 0 and < 12. foot_height must be an integer. Total height must be between 2’6” and 8’
+-   **metric_height** *number* (optional) - the client’s height in centimeters. This field is ignored if foot_height or inch_height are present. Must be between 77 and 243 cm.
+-   **current_weight** *number* (optional) - the client’s current weight in lbs. Must be >= 60 and <= 800
+-   **metric_weight** *number* (optional) - the client’s weight in kgs. Must be between 28 and 363 kgs. This field is ignored if current_weight is present
+-   **weight_goal** *integer* (optional) - the client’s weight goal. Must be either -1 (lose weight), 0 (maintain/tone), or 1 (gain weight).
+-   **activity_level** *integer* (optional) - must be one of:
+    -   0 (for sedentary)
+    -   1 (for lightly active)
+    -   2 (for moderately active)
+    -   3 (for heavily active)
+    -   4 (for extremely active)
+
+#### Meal Plan Fields
+<aside class="notice">
+If any of these fields are provided then the basic fields are required.
 </aside>
+If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types then the manual meal plan settings setup step for the client can be skipped within the app.
 
-## Get a Specific Kitten
+-   **setup_own_mp_prefs** *boolean* (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite. Does nothing if you’re delivering plans via PDF.
 
-```ruby
-require 'kittn'
+-   **meal_plan_weekday** *integer* (optional) - indicates which weekday should be the first day of the client’s meal plan each week. If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED. Must be one of:
+	-   0 (for Sunday)
+	-   1 (for Monday)
+	-   2 (for Tuesday)
+	-   3 (for Wednesday)
+	-   4 (for Thursday)
+	-   5 (for Friday)
+	-   6 (for Saturday)
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+-   **diet_type** *integer* (optional) - must be one of:
+	-   0 (for no restriction)
+	-   1 (for pescetarian)
+	-   2 (for vegetarian)
+	-   3 (for paleo)
+	-   4 (for keto)
+	-   5 (for vegan)
 
-```python
-import kittn
+-   **budget** *integer* (optional) - an integer (0,1,2, or 3) indicating how high the client’s grocery budget is. 0 for the lowest possible budget and 3 for the highest. Generally this field should be maxed out to increase variety, but can also be a good way to modulate expenses for cost-sensitive clients
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+-   **weekly_variety** *integer* (optional) - an integer (0,1,2, or 3) indicating how much variety to include in the client’s meal plan (i.e. how often to switch up meals vs repeating them/eating leftovers meal prep style). 0 for the least amount of variety and the least amount of cooking, 3 for the most variety and most cooking.
 
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
+-   **complexity_preference** *integer* (optional) - an integer (0,1,2, or 3) indicating the maximum level of recipe complexity to include in this client’s plan. Recipe complexity is a qualitative metric determined by ingredient counts and total time required by a recipe. 0 is the least complex and 3 is the most. Note that restricting complexity too much can reduce variety in the meal plan.
 
-```javascript
-const kittn = require('kittn');
+-   <a id="selected-meal-types"></a>**selected_meal_types** *array of strings* (optional) - an array indicating which meals to include in the client’s plan each day. At least two meal types must be specified. Possible values are:
+	-   breakfast
+	-   lunch
+	-   dinner
+	-   snack
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
+-   **excluded_keywords** *string* (optional) - a comma-separated list of tags used for food allergy exclusions. Possible tags are:
+	-   dairy1 (excludes high-lactose dairy from the meal plan)
+	-   dairy2 (excludes all dairy from the meal plan)
+	-   egg1 (excludes eggs from the meal plan)
+	-   peanut1 (excludes peanuts from the meal plan)
+	-   tree_nuts (excludes tree nuts from the meal plan)
+	-   soy1 (excludes soy from the meal plan)
+	-   gluten1 (excludes gluten from the meal plan)
+	-   fish1 (excludes fish from the meal plan)
+	-   shellfish1 (excludes shellfish from the meal plan)
 
-> The above command returns JSON structured like this:
+-   **extra_keywords** *string* (optional) - a comma separated list of free-text keywords/phrases to exclude from the meal plan. For example, if this was set to “brussels sprouts,beef” the meal plan would never include any recipes whose name, description, or ingredients included the keyword “brussels sprouts” or “beef”. Important: these keywords should be as specific as possible. For example, instead of setting the field to “nightshade” you should set it to “tomato,pepper,potato,eggplant”.
 
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
+-   **meal_type_daily_percentages** *object* (optional) - an object whose keys are the meal types included in [selected_meal_types](#selected-meal-types) and values are the percentage of the client’s daily calories that should be allocated to that meal type. For example, a value of { “breakfast”: 20, “lunch”: 30, “dinner”: 50 } would tell the meal planner to allocate 20%, 30%, and 50% of the client’s daily calories to breakfast, lunch, and dinner respectively.
 
-This endpoint retrieves a specific kitten.
+-   **override_calories** *boolean* (optional) - if set to true, the meal planner will use the calorie goal specified in calorie_override for this client’s meal plan. Otherwise, calorie_override will be ignored and the client’s calorie goal will be calculated automatically based on their profile.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-   **calorie_override** *integer* (optional) - the client’s daily caloric needs. Must be between 600 and 5500 if specified. If this is not specified, or override_calories is not set to true, the client’s daily calories are calculated automatically based on their profile.
+    
+-   **fiber_goal** *integer* (optional) - how many grams of fiber the client should be eating per day. Must be between 0 and 40.
+    
+-   **macro_parameters** *array of objects* (optional) - an array representing the client’s daily macronutrient targets. Each object in the array represents a single macronutrient and its daily target. You can specify targets for up to two macronutrients. If an empty array is set, the client’s macro goals will be calculated automatically based on their profile. Each object should have the following fields:
+	-   **macro** *string* (required) - the macro whose daily target is being specified. Must be one of:
+		-   protein
+		-   carbs
+		-   fat
+	-   **amount** *number* (required) - how much of the specified macro the client should be eating each day. This will either be interpreted as a percent of the client’s daily calories or a gram amount, depending on the value of unit_type.
+	-   **unit_type** *integer* (required) - must be one of:
+		-   0 - the amount field will be interpreted as grams
+		-   1 - the amount field will be interpreted as a percentage of the client’s daily calories
+	-   **compare_type** *string* (required) - must be one of:
+		-   at_least - the client should be eating AT LEAST the specified amount of the macronutrient 
+		-   at_most - the client should be eating AT MOST the specified amount of the macronutrient
 
-### HTTP Request
+### Examples
 
-`GET http://example.com/kittens/<ID>`
+#### Minimal Create Client Request
 
-### URL Parameters
+`json
+    {  
+        "user": {  
+			"first_name": "John",  
+			"last_name": "Smith"
+		}  
+	}
+`
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
 
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
 
