@@ -6,8 +6,8 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta
-            name="description"
-            content="Documentation for the Kittn API"
+            name="Strongr Fastr for Professionals API"
+            content="Documentation for the Strongr Fastr for Professionals API"
         >
     <title>API Reference</title>
 
@@ -303,7 +303,7 @@
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="images/logo-1e815a84.png" class="logo" alt="" />
+      <img src="images/logo-e09bd733.png" class="logo" alt="" />
         <div class="lang-selector">
               <a href="#" data-language-name="json">json</a>
         </div>
@@ -329,13 +329,9 @@
                   </li>
               </ul>
           </li>
-          <li>
-            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
-          </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a></li>
+            <li>Need help? Contact [philip@strongrfastr.com](mailto:philip@strongrfastr.com)</li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -469,6 +465,12 @@
 <li>  <strong>generate_meal_plan</strong> <em>boolean</em> (optional) - if set to true, the client’s first meal plan will automatically be generated after the client is created. This will fail unless the meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types fields are all set in the <a href="#user-object">user object</a>.</li>
 <li>  <strong>suppress_notification_email</strong> <em>boolean</em> (optional) - by default an email will be sent to the new client’s trainer after the client is created. Setting this flag to true prevents that email from being sent.</li>
 </ul>
+<h3 id='response'>Response</h3>
+<p>If the request succeeds the response will be an object with a single key/value pair:
+- <strong>client_id</strong> <em>integer</em> - the id of the newly created client </p>
+
+<p>If the request fails, the response will be an object with an error message:
+- <strong>error</strong> <em>string</em> - the error message</p>
 <h3 id='user-object'><a id="user-object"></a>User Object</h3><h4 id='basic-fields'>Basic Fields</h4>
 <p>When creating a client, if you provide a first_name, last_name, gender, age, height (foot_height/inch_height or metric_height), weight (current_weight or metric_weight), weight_goal, and activity_level, then the manual “Set Up Client” step can be skipped within the app.</p>
 
@@ -577,64 +579,6 @@ If any of these fields are provided then the basic fields are required.
 </ul></li>
 </ul></li>
 </ul>
-<h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
-</tr>
-</tbody></table>
 
       </div>
       <div class="dark-box">
