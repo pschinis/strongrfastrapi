@@ -295,7 +295,7 @@
     </script>
   </head>
 
-  <body class="index" data-languages="[]">
+  <body class="index" data-languages="[&quot;json&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -304,6 +304,9 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo-1e815a84.png" class="logo" alt="" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="json">json</a>
+        </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
@@ -351,24 +354,29 @@
 
 <p><code>Content-Type: application/json</code></p>
 <h1 id='clients'>Clients</h1><h2 id='create-a-client'>Create a Client</h2>
+<blockquote>
+<p>Minimal Create Client Request If Delivering via PDF</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+    </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
+    </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="w">
+  </span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Minimal Create Client Request If Delivering via App/Web</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+    </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
+    </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"johnsmith@example.com"</span><span class="w">
+  </span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p>This endpoint creates a new client.</p>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre></div><h3 id='http-request'>HTTP Request</h3>
+<h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://www.strongrfastr.com/en/api/v1/trainers/create_client</code></p>
 <h3 id='request-body'>Request Body</h3>
 <ul>
@@ -491,15 +499,6 @@ If any of these fields are provided then the basic fields are required.
 </ul></li>
 </ul></li>
 </ul>
-<h3 id='examples'>Examples</h3><h4 id='minimal-create-client-request'>Minimal Create Client Request</h4>
-<p><code>json
-    {  
-        &quot;user&quot;: {  
-            &quot;first_name&quot;: &quot;John&quot;,  
-            &quot;last_name&quot;: &quot;Smith&quot;
-        }  
-    }
-</code></p>
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
@@ -561,6 +560,9 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 
       </div>
       <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="json">json</a>
+          </div>
       </div>
     </div>
   </body>
