@@ -43,28 +43,108 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 
 ## Create a Client
 
-> Minimal Create Client Request If Delivering via PDF
+> Minimal create client request if delivering via PDF:
 
 ```json
 {  
-  "user": {  
-    "first_name": "John",  
-    "last_name": "Smith"
+    "user": {  
+        "first_name": "John",  
+        "last_name": "Smith"
+    }  
+}
+```
+
+> Minimal create client request if delivering via app/web:
+
+```json
+{  
+    "user": {  
+        "first_name": "John",  
+        "last_name": "Smith",
+        "email": "johnsmith@example.com"
   }  
 }
 ```
 
-> Minimal Create Client Request If Delivering via App/Web
+> Create client with basic profile:
 
 ```json
-{  
-  "user": {  
-    "first_name": "John",  
-    "last_name": "Smith",
-    "email": "johnsmith@example.com"
-  }  
+{
+   "user": {
+       "first_name": "Jane",
+       "last_name": "Smith",
+       "email": "johnsmith@example.com",
+       "gender": 1,
+       "age": 32,
+       "foot_height": 5,
+       "inch_height": 6,
+       "current_weight": 149,
+       "weight_goal": -1,
+       "activity_level": 2
+   }
 }
 ```
+
+> Create client with basic profile & meal plan profile & generate first meal mlan immediately:
+
+```json
+{
+   "generate_meal_plan": true,
+   "user": {
+       "first_name": "Jane",
+       "last_name": "Smith",
+       "gender": 1,
+       "age": 32,
+       "foot_height": 5,
+       "inch_height": 6,
+       "current_weight": 149,
+       "weight_goal": -1,
+       "activity_level": 2,
+       "meal_plan_weekday": 2,
+       "diet_type": 1,
+       "budget": 3,
+       "weekly_variety": 3,
+       "complexity_preference": 3,
+       "selected_meal_types": ["breakfast","lunch","dinner"]
+   }
+}
+```
+
+> Create client with specific macro goals & food allergies:
+
+```json
+{
+   "user": {
+       "first_name": "Aaardvark",
+       "last_name": "Tom",
+       "gender": 1,
+       "age": 32,
+       "foot_height": 5,
+       "inch_height": 6,
+       "current_weight": 149,
+       "weight_goal": -1,
+       "activity_level": 2,
+       "meal_plan_weekday": 2,
+       "diet_type": 1,
+       "budget": 3,
+       "weekly_variety": 3,
+       "complexity_preference": 3,
+       "selected_meal_types": ["breakfast","lunch","dinner"],
+       "excluded_keywords": "dairy1,soy1,gluten1",
+       "extra_keywords": "brussel sprouts,lima beans",
+       "override_calories": true,
+       "calorie_override": 2200,
+       "fiber_goal": 25,
+       "macro_parameters": [
+           { "macro": "protein", "amount": 180, "unit_type": 0, "compare_type": "at_least" },
+           { "macro": "carbs", "amount": 20, "unit_type": 1, "compare_type": "at_most" }
+       ]
+   }
+}
+```
+
+> This will create a lactose intolerant client (dairy1) who is also allergic to soy and gluten (soy1,gluten1) and does not want brussel sprouts or lima beans in their meal plan. They have a daily calorie goal of 2200 calories, a daily fiber goal of 25 grams, a daily protein goal of at least 180g, and a daily carbs goal of 20% or less.
+
 
 This endpoint creates a new client.
 
