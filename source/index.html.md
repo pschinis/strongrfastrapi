@@ -5,7 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - json
 
 toc_footers:
-  - Need help? Contact [philip@strongrfastr.com](mailto:philip@strongrfastr.com)
+  - Need help? <a href="mailto:philip@strongrfastr.com">Contact us</a>
 
 search: true
 
