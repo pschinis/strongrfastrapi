@@ -5,19 +5,15 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - json
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
-
-includes:
-  - errors
+  - Need help? Contact [philip@strongrfastr.com](mailto:philip@strongrfastr.com)
 
 search: true
 
 code_clipboard: true
 
 meta:
-  - name: description
-    content: Documentation for the Kittn API
+  - name: Strongr Fastr for Professionals API
+    content: Documentation for the Strongr Fastr for Professionals API
 ---
 
 
@@ -162,6 +158,15 @@ This endpoint creates a new client.
 	-   create (default - creates the client without sending an invite)
 -   **generate_meal_plan** *boolean* (optional) - if set to true, the client’s first meal plan will automatically be generated after the client is created. This will fail unless the meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types fields are all set in the [user object](#user-object).
 -   **suppress_notification_email** *boolean* (optional) - by default an email will be sent to the new client’s trainer after the client is created. Setting this flag to true prevents that email from being sent.
+
+### Response
+
+If the request succeeds the response will be an object with a single key/value pair:
+- **client_id** *integer* - the id of the newly created client 
+
+If the request fails, the response will be an object with an error message:
+- **error** *string* - the error message
+
 
 ### <a id="user-object"></a>User Object
 
