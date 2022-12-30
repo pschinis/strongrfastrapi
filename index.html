@@ -355,26 +355,104 @@
 <p><code>Content-Type: application/json</code></p>
 <h1 id='clients'>Clients</h1><h2 id='create-a-client'>Create a Client</h2>
 <blockquote>
-<p>Minimal Create Client Request If Delivering via PDF</p>
+<p>Minimal create client request if delivering via PDF:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
-  </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
-    </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
-    </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="w">
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="w">
+    </span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Minimal create client request if delivering via app/web:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"johnsmith@example.com"</span><span class="w">
   </span><span class="p">}</span><span class="w">  
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
-<p>Minimal Create Client Request If Delivering via App/Web</p>
+<p>Create client with basic profile:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
-  </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
-    </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
-    </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"johnsmith@example.com"</span><span class="w">
-  </span><span class="p">}</span><span class="w">  
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"johnsmith@example.com"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"foot_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"inch_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"current_weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">149</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"weight_goal"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"activity_level"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
+<blockquote>
+<p>Create client with basic profile &amp; meal plan profile &amp; generate first meal mlan immediately:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"generate_meal_plan"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"foot_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"inch_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"current_weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">149</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"weight_goal"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"activity_level"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"meal_plan_weekday"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"diet_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"budget"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"weekly_variety"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"complexity_preference"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"selected_meal_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"breakfast"</span><span class="p">,</span><span class="s2">"lunch"</span><span class="p">,</span><span class="s2">"dinner"</span><span class="p">]</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Create client with specific macro goals &amp; food allergies:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Aaardvark"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tom"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"foot_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"inch_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"current_weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">149</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"weight_goal"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"activity_level"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"meal_plan_weekday"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"diet_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"budget"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"weekly_variety"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"complexity_preference"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"selected_meal_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"breakfast"</span><span class="p">,</span><span class="s2">"lunch"</span><span class="p">,</span><span class="s2">"dinner"</span><span class="p">],</span><span class="w">
+       </span><span class="nl">"excluded_keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dairy1,soy1,gluten1"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"extra_keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">"brussel sprouts,lima beans"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"override_calories"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"calorie_override"</span><span class="p">:</span><span class="w"> </span><span class="mi">2200</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"fiber_goal"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"macro_parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+           </span><span class="p">{</span><span class="w"> </span><span class="nl">"macro"</span><span class="p">:</span><span class="w"> </span><span class="s2">"protein"</span><span class="p">,</span><span class="w"> </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span><span class="w"> </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nl">"compare_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"at_least"</span><span class="w"> </span><span class="p">},</span><span class="w">
+           </span><span class="p">{</span><span class="w"> </span><span class="nl">"macro"</span><span class="p">:</span><span class="w"> </span><span class="s2">"carbs"</span><span class="p">,</span><span class="w"> </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="nl">"unit_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nl">"compare_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"at_most"</span><span class="w"> </span><span class="p">}</span><span class="w">
+       </span><span class="p">]</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>This will create a lactose intolerant client (dairy1) who is also allergic to soy and gluten (soy1,gluten1) and does not want brussel sprouts or lima beans in their meal plan. They have a daily calorie goal of 2200 calories, a daily fiber goal of 25 grams, a daily protein goal of at least 180g, and a daily carbs goal of 20% or less.</p>
+</blockquote>
+
 <p>This endpoint creates a new client.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://www.strongrfastr.com/en/api/v1/trainers/create_client</code></p>
