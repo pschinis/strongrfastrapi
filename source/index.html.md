@@ -50,10 +50,11 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 }
 ```
 
-> Minimal create client request if delivering via app/web:
+> Minimal create client request w/ invite if delivering via app/web:
 
 ```json
 {  
+    "type": "invite",
     "user": {  
         "first_name": "John",  
         "last_name": "Smith",
@@ -66,6 +67,7 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 
 ```json
 {
+   "type": "invite",
    "user": {
        "first_name": "Jane",
        "last_name": "Smith",
@@ -85,6 +87,7 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 
 ```json
 {
+   "type": "create",
    "generate_meal_plan": true,
    "user": {
        "first_name": "Jane",
