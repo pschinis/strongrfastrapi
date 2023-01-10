@@ -176,6 +176,7 @@ When creating a client, if you provide a first_name, last_name, gender, age, hei
 -   **first_name** *string* (required) - the client’s first name
 -   **last_name** *string* (required) - the client’s last name
 -   **email** *string* (optional if you’re delivering plans via “pdf”, required otherwise) - client’s email address
+-   **setup_own_profile** *boolean* (optional) - set to true to have the client fill in their own gender, weight goal, age, height, weight, and activity level when they accept their invite
 -   **gender** *integer* (optional) - 0 for male, 1 for female
 -   **age** *integer* (optional) - the client’s age as an integer, must be >= 18 and <= 99
 -   **foot_height** *integer*, **inch_height** *number* (optional) - the client’s height in feet and inches. inch_height should be blank or a number >= 0 and < 12. foot_height must be an integer. Total height must be between 2’6” and 8’
