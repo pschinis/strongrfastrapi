@@ -50,7 +50,7 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 }
 ```
 
-> Minimal create client request w/ invite if delivering via app/web:
+> Minimal create & invite a client if delivering via app/web:
 
 ```json
 {  
@@ -59,6 +59,22 @@ Requests to the API should have a JSON body and content-type (‘application/jso
         "first_name": "John",  
         "last_name": "Smith",
         "email": "johnsmith@example.com"
+  }  
+}
+```
+
+> Create & invite client and have them set up their own profile, meal plan, and workouts:
+
+```json
+{  
+    "type": "invite",
+    "user": {  
+        "first_name": "John",  
+        "last_name": "Smith",
+        "email": "johnsmith@example.com",
+        "setup_own_profile": true,
+        "setup_own_mp_prefs": true,
+        "pick_own_routine": true
   }  
 }
 ```
@@ -202,7 +218,7 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 
 -   **setup_own_mp_prefs** *boolean* (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite. Does nothing if you’re delivering plans via PDF.
 
--   **meal_plan_weekday** *integer* (optional) - indicates which weekday should be the first day of the client’s meal plan each week. If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED. Must be one of:
+-   **meal_plan_weekday** *integer* (optional) - indicates which weekday should be the first day of the client’s meal plan each week. <span style="color:red">**If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED**</span>. Must be one of:
 	-   0 (for Sunday)
 	-   1 (for Monday)
 	-   2 (for Tuesday)
@@ -266,4 +282,7 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 		-   at_most - the client should be eating AT MOST the specified amount of the macronutrient
 
 
+#### Workout Plan Fields
+
+-   **pick_own_routine** *boolean* (optional) - set to true to have client go through a guided workout selection flow and pick an appopriate routine from Strongr Fastr's database of routines.
 
