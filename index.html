@@ -361,7 +361,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
-<p>Minimal create client request w/ invite if delivering via app/web:</p>
+<p>Minimal create &amp; invite a client if delivering via app/web:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
     </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"invite"</span><span class="p">,</span><span class="w">
@@ -369,6 +369,21 @@
         </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
         </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"johnsmith@example.com"</span><span class="w">
+  </span><span class="p">}</span><span class="w">  
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Create &amp; invite client and have them set up their own profile, meal plan, and workouts:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"invite"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">  
+        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"johnsmith@example.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"setup_own_profile"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"setup_own_mp_prefs"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pick_own_routine"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
   </span><span class="p">}</span><span class="w">  
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -508,7 +523,7 @@ If any of these fields are provided then the basic fields are required.
 
 <ul>
 <li><p><strong>setup_own_mp_prefs</strong> <em>boolean</em> (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite. Does nothing if you’re delivering plans via PDF.</p></li>
-<li><p><strong>meal_plan_weekday</strong> <em>integer</em> (optional) - indicates which weekday should be the first day of the client’s meal plan each week. If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED. Must be one of:</p>
+<li><p><strong>meal_plan_weekday</strong> <em>integer</em> (optional) - indicates which weekday should be the first day of the client’s meal plan each week. <span style="color:red"><strong>If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED</strong></span>. Must be one of:</p>
 
 <ul>
 <li>  0 (for Sunday)</li>
@@ -582,6 +597,10 @@ If any of these fields are provided then the basic fields are required.
 <li>  at_most - the client should be eating AT MOST the specified amount of the macronutrient</li>
 </ul></li>
 </ul></li>
+</ul>
+<h4 id='workout-plan-fields'>Workout Plan Fields</h4>
+<ul>
+<li>  <strong>pick_own_routine</strong> <em>boolean</em> (optional) - set to true to have client go through a guided workout selection flow and pick an appopriate routine from Strongr Fastr&#39;s database of routines.</li>
 </ul>
 
       </div>
