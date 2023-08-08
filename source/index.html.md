@@ -175,7 +175,7 @@ This endpoint creates a new client.
 -   **type** *string* (optional) - if specified must be one of:
 	-   invite (if delivering plans via the app/website an invite will get sent to the client’s email address)
 	-   create (default - creates the client without sending an invite)
--   **tags** *array of string* (optional) - an array of any tags (arbitrary strings) to be applied to the client
+-   **tags** *array of string* (optional) - an array of any tags (arbitrary strings for grouping clients) to be applied to the client. Can also be passed as a comma-delimited string.
 -   **generate_meal_plan** *boolean* (optional) - if set to true, the client’s first meal plan will automatically be generated after the client is created. This will fail unless the meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types fields are all set in the [user object](#user-object).
 -   **suppress_notification_email** *boolean* (optional) - by default an email will be sent to the new client’s trainer after the client is created. Setting this flag to true prevents that email from being sent.
 -   **delete_and_replace** *boolean* (optional) - by default if you already have a client with the same email address in our system, the call will error out and leave the existing client in place. If you set this flag to true, then the call will succeed and the pre-existing client will be deleted.
