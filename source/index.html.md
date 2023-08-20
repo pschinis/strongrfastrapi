@@ -220,6 +220,8 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 
 -   **setup_own_mp_prefs** *boolean* (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite. Does nothing if you’re delivering plans via PDF.
 
+-   **can_edit_own_meal_plan** *boolean* (optional) - set to true to allow clients to create and edit their own meal plans. Defaults to true. Does nothing if you’re delivering plans via PDF.
+
 -   **meal_plan_weekday** *integer* (optional) - indicates which weekday should be the first day of the client’s meal plan each week. <span style="color:red">**If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED**</span>. Must be one of:
 	-   0 (for Sunday)
 	-   1 (for Monday)
