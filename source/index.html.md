@@ -63,7 +63,24 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 }
 ```
 
-> Create & invite client and have them set up their own profile, meal plan, and workouts:
+> If delivering via PDF: create & invite client and have them set up their own profile, meal plan preferences, and pick some initial recipes. Then generate and deliver them a meal plan:
+
+```json
+{  
+    "type": "invite",
+    "user": {  
+        "first_name": "John",  
+        "last_name": "Smith",
+        "email": "johnsmith@example.com",
+        "setup_own_profile": true,
+        "setup_own_mp_prefs": true,
+        "can_pick_initial_recipes": true,
+        "auto_deliver_mp_pdf": true
+  }  
+}
+```
+
+> If deliver by app/web: create & invite client and have them set up their own profile, meal plan, and workouts:
 
 ```json
 {  
