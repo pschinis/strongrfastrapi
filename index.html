@@ -423,7 +423,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
-<p>Create client with basic profile &amp; meal plan profile &amp; generate first meal mlan immediately:</p>
+<p>Create client with basic profile &amp; meal plan profile &amp; generate first meal plan immediately (and email the client a PDF if delivering via PDF):</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"create"</span><span class="p">,</span><span class="w">
@@ -431,6 +431,8 @@
    </span><span class="nl">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
        </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane"</span><span class="p">,</span><span class="w">
        </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jane@example.com"</span><span class="p">,</span><span class="w"> 
+       </span><span class="nl">"auto_deliver_mp_pdf"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
        </span><span class="nl">"gender"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
        </span><span class="nl">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w">
        </span><span class="nl">"foot_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
@@ -513,7 +515,7 @@
 <ul>
 <li>  <strong>first_name</strong> <em>string</em> (required) - the client’s first name</li>
 <li>  <strong>last_name</strong> <em>string</em> (required) - the client’s last name</li>
-<li>  <strong>email</strong> <em>string</em> (optional if you’re delivering plans via “pdf” and setup_own_profile is false, required otherwise) - client’s email address</li>
+<li>  <strong>email</strong> <em>string</em> (optional if you’re delivering plans via “pdf” and both setup_own_profile and auto_deliver_mp_pdf are false, required otherwise) - client’s email address</li>
 <li>  <strong>assign_default_forms</strong> <em>boolean</em> (optional) - if you&#39;ve set up default forms, check-ins, &amp; assessments within the app set this flag to true and those will be assigned to the client upon creation</li>
 <li>  <strong>setup_own_profile</strong> <em>boolean</em> (optional) - set to true to have the client fill in their own gender, weight goal, age, height, weight, and activity level when they accept their invite</li>
 <li>  <strong>gender</strong> <em>integer</em> (optional) - 0 for male, 1 for female</li>
