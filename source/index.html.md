@@ -116,7 +116,7 @@ Requests to the API should have a JSON body and content-type (‘application/jso
 }
 ```
 
-> Create client with basic profile & meal plan profile & generate first meal mlan immediately:
+> Create client with basic profile & meal plan profile & generate first meal plan immediately (and email the client a PDF if delivering via PDF):
 
 ```json
 {
@@ -125,6 +125,8 @@ Requests to the API should have a JSON body and content-type (‘application/jso
    "user": {
        "first_name": "Jane",
        "last_name": "Smith",
+       "email": "jane@example.com", 
+       "auto_deliver_mp_pdf": true,
        "gender": 1,
        "age": 32,
        "foot_height": 5,
@@ -213,7 +215,7 @@ When creating a client, if you provide a first_name, last_name, gender, age, hei
 
 -   **first_name** *string* (required) - the client’s first name
 -   **last_name** *string* (required) - the client’s last name
--   **email** *string* (optional if you’re delivering plans via “pdf” and setup_own_profile is false, required otherwise) - client’s email address
+-   **email** *string* (optional if you’re delivering plans via “pdf” and both setup_own_profile and auto_deliver_mp_pdf are false, required otherwise) - client’s email address
 -   **assign_default_forms** *boolean* (optional) - if you've set up default forms, check-ins, & assessments within the app set this flag to true and those will be assigned to the client upon creation
 -   **setup_own_profile** *boolean* (optional) - set to true to have the client fill in their own gender, weight goal, age, height, weight, and activity level when they accept their invite
 -   **gender** *integer* (optional) - 0 for male, 1 for female
