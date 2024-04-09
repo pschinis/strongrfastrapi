@@ -497,7 +497,8 @@
 <ul>
 <li>  <strong>first_name</strong> <em>string</em> (required) - the client’s first name</li>
 <li>  <strong>last_name</strong> <em>string</em> (required) - the client’s last name</li>
-<li>  <strong>email</strong> <em>string</em> (optional if you’re delivering plans via “pdf”, required otherwise) - client’s email address</li>
+<li>  <strong>email</strong> <em>string</em> (optional if you’re delivering plans via “pdf” and setup_own_profile is false, required otherwise) - client’s email address</li>
+<li>  <strong>assign_default_forms</strong> <em>boolean</em> (optional) - if you&#39;ve set up default forms, check-ins, &amp; assessments within the app set this flag to true and those will be assigned to the client upon creation</li>
 <li>  <strong>setup_own_profile</strong> <em>boolean</em> (optional) - set to true to have the client fill in their own gender, weight goal, age, height, weight, and activity level when they accept their invite</li>
 <li>  <strong>gender</strong> <em>integer</em> (optional) - 0 for male, 1 for female</li>
 <li>  <strong>age</strong> <em>integer</em> (optional) - the client’s age as an integer, must be &gt;= 18 and &lt;= 99</li>
@@ -524,8 +525,10 @@ If any of these fields are provided then the basic fields are required.
 <p>If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types then the manual meal plan settings setup step for the client can be skipped within the app.</p>
 
 <ul>
-<li><p><strong>setup_own_mp_prefs</strong> <em>boolean</em> (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite. Does nothing if you’re delivering plans via PDF.</p></li>
+<li><p><strong>setup_own_mp_prefs</strong> <em>boolean</em> (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite.</p></li>
 <li><p><strong>can_edit_own_meal_plan</strong> <em>boolean</em> (optional) - set to true to allow clients to create and edit their own meal plans. Defaults to true. Does nothing if you’re delivering plans via PDF.</p></li>
+<li><p><strong>can_pick_initial_recipes</strong> <em>boolean</em> (optional) - if delivering by PDF and setup_own_mp_prefs is set to true, you can set this flag to true to enable the initial recipe picking step where clients can pick some recipes they&#39;d like to show up on their meal plan. Does nothing if delivering by app.</p></li>
+<li><p><strong>auto_deliver_mp_pdf</strong> <em>boolean</em> (optional) - if delivering by PDF and setup_own_mp_prefs is set to true, you can set this flag to true and the app will automatically email the client a PDF of their plan using the default PDF export settings (including any note) set by this client&#39;s coach. If this flag is unset or set to false, the coach will have to manually deliver this client&#39;s meal plan by exporting from within the app. Does nothing if delivering by app.</p></li>
 <li><p><strong>meal_plan_weekday</strong> <em>integer</em> (optional) - indicates which weekday should be the first day of the client’s meal plan each week. <span style="color:red"><strong>If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED</strong></span>. Must be one of:</p>
 
 <ul>
