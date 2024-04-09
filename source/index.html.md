@@ -244,7 +244,7 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 
 -   **can_pick_initial_recipes** *boolean* (optional) - if delivering by PDF and setup_own_mp_prefs is set to true, you can set this flag to true to enable the initial recipe picking step where clients can pick some recipes they'd like to show up on their meal plan. Does nothing if delivering by app.
 
--   **auto_deliver_mp_pdf** *boolean* (optional) - if delivering by PDF and setup_own_mp_prefs is set to true, you can set this flag to true and the app will automatically email the client a PDF of their plan using the default PDF export settings (including any note) set by this client's coach. If this flag is unset or set to false, the coach will have to manually deliver this client's meal plan by exporting from within the app. Does nothing if delivering by app.
+-   **auto_deliver_mp_pdf** *boolean* (optional) - if delivering by PDF and setup_own_mp_prefs is set to true OR generate_meal_plan is set to true, you can set this flag to true and the app will automatically email the client a PDF of their plan using the default PDF export settings (including any note) set by this client's coach. If this flag is unset or set to false, the coach will have to manually deliver this client's meal plan by exporting from within the app. Does nothing if delivering by app.
 
 -   **meal_plan_weekday** *integer* (optional) - indicates which weekday should be the first day of the client’s meal plan each week. <span style="color:red">**If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED**</span>. Must be one of:
 	-   0 (for Sunday)
