@@ -233,10 +233,6 @@ When creating a client, if you provide a first_name, last_name, gender, age, hei
     -   4 (for extremely active)
 
 #### Meal Plan Fields
-<aside class="notice">
-If any of these fields are provided then the basic fields are required.
-</aside>
-If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types then the manual meal plan settings setup step for the client can be skipped within the app.
 
 -   **setup_own_mp_prefs** *boolean* (optional) - set to true to have the client fill in their own meal plan profile after they accept their invite.
 
@@ -245,6 +241,11 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 -   **can_pick_initial_recipes** *boolean* (optional) - if delivering by PDF and setup_own_mp_prefs is set to true, you can set this flag to true to enable the initial recipe picking step where clients can pick some recipes they'd like to show up on their meal plan. Does nothing if delivering by app.
 
 -   **auto_deliver_mp_pdf** *boolean* (optional) - if delivering by PDF and setup_own_mp_prefs is set to true OR generate_meal_plan is set to true, you can set this flag to true and the app will automatically email the client a PDF of their plan using the default PDF export settings (including any note) set by this client's coach. If this flag is unset or set to false, the coach will have to manually deliver this client's meal plan by exporting from within the app. Does nothing if delivering by app.
+
+<aside class="notice">
+If any of the below meal plan fields are provided then the basic fields are required.
+</aside>
+If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types then the manual meal plan settings setup step for the client can be skipped within the app.
 
 -   **meal_plan_weekday** *integer* (optional) - indicates which weekday should be the first day of the client’s meal plan each week. <span style="color:red">**If this field is included then diet_type, budget, weekly_variety, complexity_preference, and selected_meal_types are all REQUIRED**</span>. Must be one of:
 	-   0 (for Sunday)
