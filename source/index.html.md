@@ -202,8 +202,8 @@ This endpoint creates a new client.
 ### Response
 
 If the request succeeds the response will be an object with the following key/value pairs:
-- **client_id** *integer* - the id of the newly created client 
-- **mp_pdf_url** *string* - if generate_meal_plan was set to true, a url where a PDF of the plan can be downloaded will be provided here. A simple GET request to this URL with the appropriate Authorization header (see above) will return the PDF file
+-   **client_id** *integer* - the id of the newly created client 
+-   **mp_pdf_url** *string* - if generate_meal_plan was set to true, a url where a PDF of the plan can be downloaded will be provided here. A simple GET request to this URL with the appropriate Authorization header (see above) will return the PDF file
 
 If the request fails, the response will be an object with an error message:
 - **error** *string* - the error message
