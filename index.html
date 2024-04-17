@@ -504,8 +504,9 @@
 <li>  <strong>delete_and_replace</strong> <em>boolean</em> (optional) - by default if you already have a client with the same email address in our system, the call will error out and leave the existing client in place. If you set this flag to true, then the call will succeed and the pre-existing client will be deleted.</li>
 </ul>
 <h3 id='response'>Response</h3>
-<p>If the request succeeds the response will be an object with a single key/value pair:
-- <strong>client_id</strong> <em>integer</em> - the id of the newly created client </p>
+<p>If the request succeeds the response will be an object with the following key/value pairs:
+- <strong>client_id</strong> <em>integer</em> - the id of the newly created client 
+- <strong>mp_pdf_url</strong> <em>string</em> - if generate_meal_plan was set to true, a url where a PDF of the plan can be downloaded will be provided here. A simple GET request to this URL with the appropriate Authorization header (see above) will return the PDF file</p>
 
 <p>If the request fails, the response will be an object with an error message:
 - <strong>error</strong> <em>string</em> - the error message</p>
