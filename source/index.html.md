@@ -322,6 +322,30 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 
 ## List meal plans
 
+> Example Response
+
+```json
+{
+    "user_id": 795326,
+    "meal_plan_list": [
+        {
+            "id": 82,
+            "week_start_date": "2567-07-26",
+            "resolved_name": "Week 1",
+            "published": true,
+            "hidden": null
+        },
+        {
+            "id": 83,
+            "week_start_date": "2567-08-02",
+            "resolved_name": "Week 2 - contest prep",
+            "published": false,
+            "hidden": null
+        }
+    ]
+}
+```
+
 This endpoint will return metadata for all meal plans for a given client. The metadata includes the id of each meal plan which can be used to retrieve the full plan and its grocery list. The list will be sorted in ascending order of the "start date" of each meal plan.
 
 ### HTTP Request
@@ -336,7 +360,7 @@ This endpoint will return metadata for all meal plans for a given client. The me
 
 If the request succeeds the response will be a JSON object with the following key/value pairs:
 
--   **client_id** *integer* - the id of the client 
+-   **user_id** *integer* - the id of the user/client this list is for
 -   **meal_plan_list** *array of objects* - a list of meal plan metadata objects (see below)
 
 ### Meal Plan Metadata Object
