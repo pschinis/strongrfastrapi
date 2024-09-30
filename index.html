@@ -651,6 +651,29 @@ If any of the below meal plan fields are provided then the basic fields are requ
 <li>  <strong>pick_own_routine</strong> <em>boolean</em> (optional) - set to true to have client go through a guided workout selection flow and pick an appopriate routine from Strongr Fastr&#39;s database of routines.</li>
 </ul>
 <h1 id='meal-plans-coming-soon'>Meal Plans - coming soon</h1><h2 id='list-meal-plans'>List meal plans</h2>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">795326</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"meal_plan_list"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">82</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2567-07-26"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"resolved_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Week 1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"published"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">83</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"week_start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2567-08-02"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"resolved_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Week 2 - contest prep"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"published"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p>This endpoint will return metadata for all meal plans for a given client. The metadata includes the id of each meal plan which can be used to retrieve the full plan and its grocery list. The list will be sorted in ascending order of the &quot;start date&quot; of each meal plan.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/list</code></p>
@@ -662,7 +685,7 @@ If any of the below meal plan fields are provided then the basic fields are requ
 <p>If the request succeeds the response will be a JSON object with the following key/value pairs:</p>
 
 <ul>
-<li>  <strong>client_id</strong> <em>integer</em> - the id of the client </li>
+<li>  <strong>user_id</strong> <em>integer</em> - the id of the user/client this list is for</li>
 <li>  <strong>meal_plan_list</strong> <em>array of objects</em> - a list of meal plan metadata objects (see below)</li>
 </ul>
 <h3 id='meal-plan-metadata-object'>Meal Plan Metadata Object</h3>
@@ -784,7 +807,7 @@ If any of the below meal plan fields are provided then the basic fields are requ
 
 <p>Meal plans are represented by many types of interrelated objects, below is an entity relationship diagram illustrating the general structure of a meal plan. Find more information about each type of object in the <a href="#mp-resp-objs-defs">Response Object Definitions</a> section.</p>
 
-<p><img src="images/images/erd.svg" alt="Entity Relationship Diagram" /></p>
+<p><img src="images/erd-8f72ae24.svg" alt="Entity Relationship Diagram" /></p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/get</code></p>
 <h3 id='request-body-3'>Request Body</h3>
