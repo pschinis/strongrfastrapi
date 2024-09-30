@@ -318,3 +318,454 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 
 -   **pick_own_routine** *boolean* (optional) - set to true to have client go through a guided workout selection flow and pick an appopriate routine from Strongr Fastr's database of routines.
 
+# Meal Plans - coming soon
+
+## List meal plans
+
+This endpoint will return metadata for all meal plans for a given client. The metadata includes the id of each meal plan which can be used to retrieve the full plan and its grocery list. The list will be sorted in ascending order of the "start date" of each meal plan.
+
+### HTTP Request
+
+`GET https://www.strongrfastr.com/en/api/v1/meal_plans/list`
+
+### Request Body
+
+-   **client_identifier** *string or integer* (required) - the id or email address of the client whose list of meal plans is being requested. Using the client's ID is recommended because a client's email is editable whereas its ID will never change.
+
+### Response
+
+If the request succeeds the response will be a JSON object with the following key/value pairs:
+
+-   **client_id** *integer* - the id of the client 
+-   **meal_plan_list** *array of objects* - a list of meal plan metadata objects (see below)
+
+### Meal Plan Metadata Object
+
+Each meal plan metadata object will have the following keys:
+
+-   **id** *integer* - the id of the meal plan
+-   **week_start_date** *date string* - a YYYY-MM-DD formatted date representing the start date of the meal plan. The last day of a meal plan is always the start date plus 6 days so that each meal plan represents a full 7 days of meals. For internal architecture reasons, if your account is set up to deliver via "PDF" the start date for all meal plans will be a far future date, but the weekday will match whatever is set up in the client's settings.
+-   **resolved_name** *string* - the display name of the meal plan (e.g. "Week 1")
+-   **published** *boolean* - true if this meal plan has been marked as published by the trainer who created it
+-   **hidden** *boolean* - if a meal plan has been "deleted" by the trainer who created it, it will still show up in API calls but this flag will be set to true
+
+## Get meal plan
+
+> Example get meal plan response:
+
+```json
+{
+  "meal_types": {
+    "1": {
+      "id": 1,
+      "user_id": 10,
+      "name": "Breakfast",
+      "category": "breakfast"
+    },
+    "2": {
+      "id": 2,
+      "user_id": 10,
+      "name": "Lunch",
+      "category": "lunch"
+    }
+    // Additional meal types...
+  },
+  "user_meals": {
+    "100": {
+      "id": 100,
+      "meal_type_id": 1,
+      "date": "2024-05-01",
+      "shared_meal_parent_id": null,
+      "mini_profile_id": null,
+      "uniq_key": "abc123"
+    }
+    // Additional user meals...
+  },
+  "recipe_meals": {
+    "1000": {
+      "id": 1000,
+      "user_meal_id": 100,
+      "recipe_id": 500,
+      "servings": 2,
+      "main_dish": true
+    }
+    // Additional recipe meals...
+  },
+  "recipes": {
+    "500": {
+      "name": "Oatmeal Pancakes",
+      "instructions": "Mix ingredients. \nCook on a skillet.",
+      "servings": 4,
+      "calories": 350,
+      "protein": 10,
+      "carbs": 50,
+      "fat": 12,
+      "fiber": 5,
+      "alcohol": 0,
+      "active_time": 15,
+      "cook_time": 20,
+      "serving_name": "pancake",
+      "count_per_serving": 2,
+      "image": { 
+        "url": "https://www.strongrfastr.com/images/oatmeal_pancakes.jpg", 
+        "thumb": { "url": "https://www.strongrfastr.com/images/oatmeal_pancakes_thumb.jpg" },
+        "medium_thumb": { "url": "https://www.strongrfastr.com/images/oatmeal_pancakes_medium_thumb.jpg" }
+      }
+    }
+    // Additional recipes...
+  },
+  "ingredients": {
+    "2000": {
+      "id": 2000,
+      "recipe_id": 500,
+      "food_weight_id": 300,
+      "amount": 1.5,
+      "modifier": "chopped",
+      "optional": false
+    }
+    // Additional ingredients...
+  },
+  "food_weights": {
+    "300": {
+      "id": 300,
+      "food_id": 400,
+      "measurement": "cups",
+      "grams": 150,
+      "hidden": false
+    }
+    // Additional food weights...
+  },
+  "foods": {
+    "400": {
+      "id": 400,
+      "long_description": "Whole grain rolled oats",
+      "short_description": "WHL GRN RLD OATS",
+      "common_name": "rolled oats",
+      "is_liquid": false
+    }
+    // Additional foods...
+  },
+  "mini_profiles": {
+    "5": {
+      "id": 5,
+      "user_id": 10,
+      "name": "John"
+    }
+    // Additional mini profiles...
+  }
+}
+```
+
+This endpoint retrieves all data for a specific meal plan identified by its `id` for a given client. The response is a normalized JSON object that includes comprehensive information about all meals, recipes, foods in the meal plan. 
+
+Meal plans are represented by many types of interrelated objects, below is an entity relationship diagram illustrating the general structure of a meal plan. Find more information about each type of object in the [Response Object Definitions](#mp-resp-objs-defs) section.
+
+![Entity Relationship Diagram](images/erd.svg)
+
+### HTTP Request
+
+`GET https://www.strongrfastr.com/en/api/v1/meal_plans/get`
+
+### Request Body
+
+- **client_identifier** *string or integer* (required)  
+  The ID or email address of the client whose meal plan is being requested. Using the client's ID is recommended because a client's email is editable whereas its ID will never change.
+
+- **id** *integer* (required)  
+  The unique identifier of the meal plan to retrieve. This ID corresponds to the `id` provided in the meal plans list.
+
+### Response
+
+If the request succeeds, the response will be a JSON object containing the following key/value pairs:
+
+- **meal_types** *object* - a hash where each key is a `meal_type` ID and the value is a `Meal Type` object containing its attributes.
+
+- **user_meals** *object* - a hash where each key is a `user_meal` ID and the value is a `User Meal` object containing its attributes.
+
+- **recipe_meals** *object* - a hash where each key is a `recipe_meal` ID and the value is a `Recipe Meal` object containing its attributes.
+
+- **recipes** *object* - a hash where each key is a `recipe` ID and the value is a `Recipe` object containing its attributes.
+
+- **ingredients** *object* - a hash where each key is an `ingredient` ID and the value is an `Ingredient` object containing its attributes.
+
+- **food_weights** *object* - a hash where each key is a `food_weight` ID and the value is a `Food Weight` object containing its attributes.
+
+- **foods** *object* - a hash where each key is a `food` ID and the value is a `Food` object containing its attributes.
+
+- **mini_profiles** *object* - a hash where each key is a `mini_profile` ID and the value is a `Mini Profile` object containing its attributes.
+
+<a id="mp-resp-objs-defs"></a>
+### Response Object Definitions
+
+#### Meal Type Object
+
+A `Meal Type` object represents a type of meal, either breakfast, lunch, dinner, or snack for the user that owns the meal type. Meals (i.e. `User Meals`) are assigned to a meal type and a date which determines their position in a plan.
+
+- **id** *integer* - the unique identifier of the meal type.
+
+- **user_id** *integer* - the ID of the user/client who owns this meal type.
+
+- **name** *string* - the name of the meal type (e.g., "Breakfast", "Lunch").
+
+- **category** *string* - the category to which the meal type belongs. It will always be one of ["breakfast","lunch","dinner","snack"]
+
+#### Mini Profile Object
+
+A `Mini Profile` represents a family member with whom meals on a meal plan might be shared.
+
+- **id** *integer* - the unique identifier of the mini profile.
+
+- **user_id** *integer* - the ID of the client/user associated with this mini profile.
+
+- **name** *string* - the name of the person this mini profile is for e.g. "John" or "My husband".
+
+#### User Meal Object
+
+A `User Meal` object is the top-level object representing each meal on a plan. It is made up of 1 or more child `Recipe Meal` objects that define a recipe and number of servings of that recipe to be eaten. Broadly there are two types of `User Meals`:
+
+*Regular user meals* - these are directly scheduled on the plan for the client with a date and a `Meal Type`. They are the meals the client themselves will be eating.
+
+*Shared user meals* - these represent meals that will be eaten by the user/client's family members. They don't have a date or `Meal Type`, instead they point to a parent regular `User Meal` via the shared_meal_parent_id foreign key. They also point to the "family member" (`Mini Profile`) to whom they belong via the mini_profile_id foreign key.
+
+- **id** *integer* - the unique identifier of the user meal.
+
+- **meal_type_id** *integer* - the ID of the associated meal type.
+
+- **date** *date string* - a YYYY-MM-DD formatted date representing when the meal is scheduled.
+
+- **shared_meal_parent_id** *integer or null* - the ID of the parent meal if this is a "shared" user meal, null otherwise.
+
+- **mini_profile_id** *integer* - the ID of the mini profile associated with this meal if this is a "shared" user meal, null otherwise.
+
+- **uniq_key** *string* - the unique key is a string that can be used to group identical meals across days together. In other words, if a user is eating the same breakfast multiple days in a week, all those breakfasts will be represented by separate user meal objects, but they will all have the same uniq_key.
+
+#### Recipe Meal Object
+
+`Recipe Meal` objects are the children of a `User Meal` object that define a recipe and number of servings of a recipe to be eaten.
+
+- **id** *integer* - the unique identifier of the recipe meal.
+
+- **user_meal_id** *integer* - the ID of the associated user meal.
+
+- **recipe_id** *integer*  - the ID of the recipe included in this meal.
+
+- **servings** *float*  - the number of servings for the recipe in this meal.
+
+- **main_dish** *boolean* - if set to true, this recipe meal should be considered the main dish for its parent user meal. For example, if a lunch was a Turkey Sandwich and an Apple, the Turkey Sandwich would be marked as the main dish. This is helpful for emphasizing the most important part of the meal in your UI.
+
+#### Recipe Object
+
+The `Recipe` object represents an *unscaled* recipe. A recipe has many `Ingredient` children that define the foods and quantities of those foods in the recipe. A single recipe can be present in many `Recipe Meals` throughout the plan and when appropriate (most of the time) ingedient quantities should be scaled by the number of servings being used. Note that many "recipes" are actually just single food items like an Apple, so instructions may not be present for all recipes:
+
+- **name** *string* - the name of the recipe.
+
+- **instructions** *string* - step-by-step instructions for preparing the recipe. Each step is separated by a newline character (\n). This field can be null or a blank string for simple "recipes" that require no instruction.
+
+- **servings** *integer* - this is the number of servings the unscaled recipe yields. Use this in combination with the servings attribute of recipe meals to figure out how much a recipe needs to be scaled for a given meal.
+
+- **calories** *float* - the total number of calories per serving.
+
+- **protein** *float* - the amount of protein (in grams) per serving.
+
+- **carbs** *float* - the amount of NET carbohydrates (in grams) per serving. This is carbohydrates with fiber subtracted. To get total carbohydrates, add back the fiber amount. 
+
+- **fat** *float* - the amount of fat (in grams) per serving.
+
+- **fiber** *float* - the amount of fiber (in grams) per serving.
+
+- **alcohol** *float* - the amount of alcohol (in grams) per serving.
+
+- **active_time** *integer* - the active preparation time (in minutes).
+
+- **cook_time** *integer* - the cooking time (in minutes).
+
+- **serving_name** *string* - the name used to describe a single serving (e.g., "slice", "cup").
+
+- **count_per_serving** *integer* - the number of items per serving. For example, if the serving for a pizza recipe is "2 slices" the serving name is "slices" and the count per serving would be 2. For most recipes this is 1 or null (which can be treated as the same thing).
+
+- **image** *object* - the image is an object with the following keys:
+	-   **url** *string* - the URL of the full resolution image for this recipe
+	-   **thumb** *object* - an object with a single key "url" with the url of the thumbnail (200x133px) for this image 
+    -   **medium_thumb** *object* - an object with a single key "url" with the url of the medium thumbnail (500x333px) for this image 
+
+#### Ingredient Object
+
+An `Ingredient` object belongs to a recipe and defines the amount of a food to be included in the parent recipe. Ingredients don't point directly to `Foods`, however. Instead they point to a `Food Weight` and define an amount of that food measurement to be used. For example, an ingredient might have an "amount" of 3 and point to a food weight that represents a cup of diced chicken breast, which means the parent recipe has 3 cups of diced chicken breast.
+
+- **id** *integer* - the unique identifier of the ingredient.
+
+- **recipe_id** *integer* - the ID of the recipe to which this ingredient belongs.
+
+- **food_weight_id** *integer* - the ID of the associated food weight.
+
+- **amount** *float* - the quantity of the food weight required.
+
+- **modifier** *string* - any modifier or descriptor for the ingredient (e.g., "chopped", "fresh").
+
+- **optional** *boolean* - indicates whether the ingredient is optional.
+
+#### Food Weight Object
+
+A `Food Weight` represents a specific measurement of a food and its weight in grams. For example, the `Food` almonds might have food weights for a cup, a single almond, an ounce, a gram, etc. A food weight belongs to a single food, but it can be used by many ingredients. 
+
+- **id** *integer* - the unique identifier of the food weight.
+
+- **food_id** *integer* - the ID of the associated food item.
+
+- **measurement** *string* - the unit of measurement for the food weight (e.g., "grams", "ounces", "cups").
+
+- **grams** *float* - the weight in grams of this quantity/measurement of the associated food.
+
+- **hidden** *boolean* - indicates whether this measurement should be hidden in recipes. This is usually only true if the "measurement" is redundant with the name of the food. E.g. the Apple food item might have a food weight whose measurement is a "medium apple", which doesn't need to be displayed because "1 Apple" is clearer than "1 medium apple Apple".
+
+#### Food Object
+
+A `Food` object represents a food item like apples, salt, chicken, ground beef, etc. Every food item has 1 or more `Food Weights`.
+
+- **id** *integer* - the unique identifier of the food item.
+
+- **common_name** *string* - the common, human-readable name of the food item. This is what should be displayed to users the vast majority of the time.
+
+- **long_description** *string* - this is the fully qualified name of the food. For example, for ground beef this might be "ground beef, grade A, 80% lean 20% fat"
+
+- **short_description** *string* - same as the long description but uses abbreviations.
+
+- **is_liquid** *boolean* - if true, indicates the food item is a liquid and can/should be measured in milliliters instead of grams.
+
+## Get grocery list
+
+> Example Response
+
+```json
+{
+    "grocery_list": {
+        "start_date": "2567-07-26",
+        "needed": [
+            {
+                "name": "Beverages",
+                "grocery_items": [
+                    {
+                        "recipe_meal_ids": [
+                            45490308,
+                            45490310,
+                            45490312,
+                            45490314,
+                            45490316,
+                            45490318
+                        ],
+                        "food_weight_id": 15975,
+                        "food_id": 14066,
+                        "amount": 0.24
+                    },
+                    {
+                        "recipe_meal_ids": [
+                            45490308,
+                            45490310,
+                            45490312,
+                            45490343,
+                            45490346,
+                            45490349,
+                            45490352
+                        ],
+                        "food_weight_id": 15537,
+                        "food_id": 93634,
+                        "amount": 8.33
+                    }
+                ]
+            },
+            {
+                "name": "Nut and Seed Products",
+                "grocery_items": [
+                    {
+                        "recipe_meal_ids": [
+                            45490307,
+                            45490309,
+                            45490311,
+                            45490313,
+                            45490315,
+                            45490317
+                        ],
+                        "food_weight_id": 6827,
+                        "food_id": 12061,
+                        "amount": 3.35
+                    },
+                    {
+                        "recipe_meal_ids": [
+                            45490313,
+                            45490315,
+                            45490317
+                        ],
+                        "food_weight_id": 6966,
+                        "food_id": 12195,
+                        "amount": 2.0
+                    },
+                    {
+                        "recipe_meal_ids": [
+                            45490356,
+                            45490358,
+                            45490360,
+                            45490362
+                        ],
+                        "food_weight_id": 16153,
+                        "food_id": 12036,
+                        "amount": 5.0
+                    }
+                ]
+            }
+            // Additional categories...
+        ],
+        "bought": []
+    }
+}
+```
+
+This endpoint retrieves the grocery list associated with a specific meal plan for a given client. The response provides detailed information about the required grocery items, categorized by their respective food groups, along with any items that have already been purchased.
+
+### HTTP Request
+
+`GET https://www.strongrfastr.com/en/api/v1/meal_plans/get_grocery_list`
+
+### Request Body
+
+- **client_identifier** *string or integer* (required) - the ID or email address of the client whose grocery list is being requested. Using the client's ID is recommended because a client's email is editable whereas its ID will never change.
+
+- **id** *integer* (required) - the unique identifier of the meal plan for which the grocery list is to be retrieved. This ID corresponds to the `id` provided in the meal plans list.
+
+### Response
+
+If the request succeeds, the response will be a JSON object containing the following key/value pairs:
+
+- **grocery_list** *object* - an object containing the grocery list details, including the start date, needed items, and bought items.
+
+### Response Object Definitions
+
+#### Grocery List Object
+
+The `Grocery List` object includes the following attributes:
+
+- **start_date** *date string* - a YYYY-MM-DD formatted date representing the start date of the meal plan for which the grocery list is generated.
+
+- **needed** *array of Category Objects* - a list of categories, each containing the grocery items required for that category.
+
+- **bought** *array of Category Objects* - a list of categories containing grocery items that have already been purchased.
+
+#### Category Object
+
+Each `Category` object includes the following attributes:
+
+- **name** *string* - the name of the grocery category (e.g., "Beverages", "Vegetables and Vegetable Products").
+
+- **grocery_items** *array of Grocery Item Objects* - a list of grocery items required or bought within this category.
+
+#### Grocery Item Object
+
+Each `Grocery Item` object includes the following attributes:
+
+- **recipe_meal_ids** *array of integers* - a list of `Recipe Meal` IDs that require this grocery item. This helps in identifying which meals utilize the ingredient.
+
+- **food_weight_id** *integer* - the unique identifier for the food weight, linking to the `Food Weight` object associated with this grocery list item.
+
+- **food_id** *integer*  - the unique identifier for the food item, linking to the `Food` object associated with this grocery list item.
+
+- **amount** *float* - the quantity of the `Food Weight` required
+
