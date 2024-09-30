@@ -329,6 +329,20 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#meal-plans-coming-soon" class="toc-h1 toc-link" data-title="Meal Plans - coming soon">Meal Plans - coming soon</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#list-meal-plans" class="toc-h2 toc-link" data-title="List meal plans">List meal plans</a>
+                  </li>
+                  <li>
+                    <a href="#get-meal-plan" class="toc-h2 toc-link" data-title="Get meal plan">Get meal plan</a>
+                  </li>
+                  <li>
+                    <a href="#get-grocery-list" class="toc-h2 toc-link" data-title="Get grocery list">Get grocery list</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li>Need help? <a href="mailto:philip@strongrfastr.com">Contact us</a></li>
@@ -635,6 +649,386 @@ If any of the below meal plan fields are provided then the basic fields are requ
 <h4 id='workout-plan-fields'>Workout Plan Fields</h4>
 <ul>
 <li>  <strong>pick_own_routine</strong> <em>boolean</em> (optional) - set to true to have client go through a guided workout selection flow and pick an appopriate routine from Strongr Fastr&#39;s database of routines.</li>
+</ul>
+<h1 id='meal-plans-coming-soon'>Meal Plans - coming soon</h1><h2 id='list-meal-plans'>List meal plans</h2>
+<p>This endpoint will return metadata for all meal plans for a given client. The metadata includes the id of each meal plan which can be used to retrieve the full plan and its grocery list. The list will be sorted in ascending order of the &quot;start date&quot; of each meal plan.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/list</code></p>
+<h3 id='request-body-2'>Request Body</h3>
+<ul>
+<li>  <strong>client_identifier</strong> <em>string or integer</em> (required) - the id or email address of the client whose list of meal plans is being requested. Using the client&#39;s ID is recommended because a client&#39;s email is editable whereas its ID will never change.</li>
+</ul>
+<h3 id='response-2'>Response</h3>
+<p>If the request succeeds the response will be a JSON object with the following key/value pairs:</p>
+
+<ul>
+<li>  <strong>client_id</strong> <em>integer</em> - the id of the client </li>
+<li>  <strong>meal_plan_list</strong> <em>array of objects</em> - a list of meal plan metadata objects (see below)</li>
+</ul>
+<h3 id='meal-plan-metadata-object'>Meal Plan Metadata Object</h3>
+<p>Each meal plan metadata object will have the following keys:</p>
+
+<ul>
+<li>  <strong>id</strong> <em>integer</em> - the id of the meal plan</li>
+<li>  <strong>week_start_date</strong> <em>date string</em> - a YYYY-MM-DD formatted date representing the start date of the meal plan. The last day of a meal plan is always the start date plus 6 days so that each meal plan represents a full 7 days of meals. For internal architecture reasons, if your account is set up to deliver via &quot;PDF&quot; the start date for all meal plans will be a far future date, but the weekday will match whatever is set up in the client&#39;s settings.</li>
+<li>  <strong>resolved_name</strong> <em>string</em> - the display name of the meal plan (e.g. &quot;Week 1&quot;)</li>
+<li>  <strong>published</strong> <em>boolean</em> - true if this meal plan has been marked as published by the trainer who created it</li>
+<li>  <strong>hidden</strong> <em>boolean</em> - if a meal plan has been &quot;deleted&quot; by the trainer who created it, it will still show up in API calls but this flag will be set to true</li>
+</ul>
+<h2 id='get-meal-plan'>Get meal plan</h2>
+<blockquote>
+<p>Example get meal plan response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"meal_types"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Breakfast"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"breakfast"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lunch"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lunch"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">meal</span><span class="w"> </span><span class="err">types...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"user_meals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"100"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"meal_type_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-05-01"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"shared_meal_parent_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mini_profile_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uniq_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">user</span><span class="w"> </span><span class="err">meals...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"recipe_meals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"1000"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"user_meal_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"recipe_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"servings"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"main_dish"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">recipe</span><span class="w"> </span><span class="err">meals...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"recipes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"500"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Oatmeal Pancakes"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instructions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mix ingredients. </span><span class="se">\n</span><span class="s2">Cook on a skillet."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"servings"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"calories"</span><span class="p">:</span><span class="w"> </span><span class="mi">350</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"protein"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"carbs"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fat"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fiber"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"alcohol"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"active_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cook_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"serving_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pancake"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"count_per_serving"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+        </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.strongrfastr.com/images/oatmeal_pancakes.jpg"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nl">"thumb"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.strongrfastr.com/images/oatmeal_pancakes_thumb.jpg"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"medium_thumb"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.strongrfastr.com/images/oatmeal_pancakes_medium_thumb.jpg"</span><span class="w"> </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">recipes...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ingredients"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"2000"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"recipe_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"food_weight_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"modifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chopped"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"optional"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">ingredients...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"food_weights"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"300"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"food_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"measurement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cups"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"grams"</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">food</span><span class="w"> </span><span class="err">weights...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"foods"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"400"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"long_description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Whole grain rolled oats"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"short_description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WHL GRN RLD OATS"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"common_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rolled oats"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"is_liquid"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">foods...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"mini_profiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"5"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">mini</span><span class="w"> </span><span class="err">profiles...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves all data for a specific meal plan identified by its <code>id</code> for a given client. The response is a normalized JSON object that includes comprehensive information about all meals, recipes, foods in the meal plan. </p>
+
+<p>Meal plans are represented by many types of interrelated objects, below is an entity relationship diagram illustrating the general structure of a meal plan. Find more information about each type of object in the <a href="#mp-resp-objs-defs">Response Object Definitions</a> section.</p>
+
+<p><img src="images/erd-8f72ae24.svg" alt="Entity Relationship Diagram" /></p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/get</code></p>
+<h3 id='request-body-3'>Request Body</h3>
+<ul>
+<li><p><strong>client_identifier</strong> <em>string or integer</em> (required)<br>
+The ID or email address of the client whose meal plan is being requested. Using the client&#39;s ID is recommended because a client&#39;s email is editable whereas its ID will never change.</p></li>
+<li><p><strong>id</strong> <em>integer</em> (required)<br>
+The unique identifier of the meal plan to retrieve. This ID corresponds to the <code>id</code> provided in the meal plans list.</p></li>
+</ul>
+<h3 id='response-3'>Response</h3>
+<p>If the request succeeds, the response will be a JSON object containing the following key/value pairs:</p>
+
+<ul>
+<li><p><strong>meal_types</strong> <em>object</em> - a hash where each key is a <code>meal_type</code> ID and the value is a <code>Meal Type</code> object containing its attributes.</p></li>
+<li><p><strong>user_meals</strong> <em>object</em> - a hash where each key is a <code>user_meal</code> ID and the value is a <code>User Meal</code> object containing its attributes.</p></li>
+<li><p><strong>recipe_meals</strong> <em>object</em> - a hash where each key is a <code>recipe_meal</code> ID and the value is a <code>Recipe Meal</code> object containing its attributes.</p></li>
+<li><p><strong>recipes</strong> <em>object</em> - a hash where each key is a <code>recipe</code> ID and the value is a <code>Recipe</code> object containing its attributes.</p></li>
+<li><p><strong>ingredients</strong> <em>object</em> - a hash where each key is an <code>ingredient</code> ID and the value is an <code>Ingredient</code> object containing its attributes.</p></li>
+<li><p><strong>food_weights</strong> <em>object</em> - a hash where each key is a <code>food_weight</code> ID and the value is a <code>Food Weight</code> object containing its attributes.</p></li>
+<li><p><strong>foods</strong> <em>object</em> - a hash where each key is a <code>food</code> ID and the value is a <code>Food</code> object containing its attributes.</p></li>
+<li><p><strong>mini_profiles</strong> <em>object</em> - a hash where each key is a <code>mini_profile</code> ID and the value is a <code>Mini Profile</code> object containing its attributes.</p></li>
+</ul>
+
+<p><a id="mp-resp-objs-defs"></a></p>
+<h3 id='response-object-definitions'>Response Object Definitions</h3><h4 id='meal-type-object'>Meal Type Object</h4>
+<p>A <code>Meal Type</code> object represents a type of meal, either breakfast, lunch, dinner, or snack for the user that owns the meal type. Meals (i.e. <code>User Meals</code>) are assigned to a meal type and a date which determines their position in a plan.</p>
+
+<ul>
+<li><p><strong>id</strong> <em>integer</em> - the unique identifier of the meal type.</p></li>
+<li><p><strong>user_id</strong> <em>integer</em> - the ID of the user/client who owns this meal type.</p></li>
+<li><p><strong>name</strong> <em>string</em> - the name of the meal type (e.g., &quot;Breakfast&quot;, &quot;Lunch&quot;).</p></li>
+<li><p><strong>category</strong> <em>string</em> - the category to which the meal type belongs. It will always be one of [&quot;breakfast&quot;,&quot;lunch&quot;,&quot;dinner&quot;,&quot;snack&quot;]</p></li>
+</ul>
+<h4 id='mini-profile-object'>Mini Profile Object</h4>
+<p>A <code>Mini Profile</code> represents a family member with whom meals on a meal plan might be shared.</p>
+
+<ul>
+<li><p><strong>id</strong> <em>integer</em> - the unique identifier of the mini profile.</p></li>
+<li><p><strong>user_id</strong> <em>integer</em> - the ID of the client/user associated with this mini profile.</p></li>
+<li><p><strong>name</strong> <em>string</em> - the name of the person this mini profile is for e.g. &quot;John&quot; or &quot;My husband&quot;.</p></li>
+</ul>
+<h4 id='user-meal-object'>User Meal Object</h4>
+<p>A <code>User Meal</code> object is the top-level object representing each meal on a plan. It is made up of 1 or more child <code>Recipe Meal</code> objects that define a recipe and number of servings of that recipe to be eaten. Broadly there are two types of <code>User Meals</code>:</p>
+
+<p><em>Regular user meals</em> - these are directly scheduled on the plan for the client with a date and a <code>Meal Type</code>. They are the meals the client themselves will be eating.</p>
+
+<p><em>Shared user meals</em> - these represent meals that will be eaten by the user/client&#39;s family members. They don&#39;t have a date or <code>Meal Type</code>, instead they point to a parent regular <code>User Meal</code> via the shared_meal_parent_id foreign key. They also point to the &quot;family member&quot; (<code>Mini Profile</code>) to whom they belong via the mini_profile_id foreign key.</p>
+
+<ul>
+<li><p><strong>id</strong> <em>integer</em> - the unique identifier of the user meal.</p></li>
+<li><p><strong>meal_type_id</strong> <em>integer</em> - the ID of the associated meal type.</p></li>
+<li><p><strong>date</strong> <em>date string</em> - a YYYY-MM-DD formatted date representing when the meal is scheduled.</p></li>
+<li><p><strong>shared_meal_parent_id</strong> <em>integer or null</em> - the ID of the parent meal if this is a &quot;shared&quot; user meal, null otherwise.</p></li>
+<li><p><strong>mini_profile_id</strong> <em>integer</em> - the ID of the mini profile associated with this meal if this is a &quot;shared&quot; user meal, null otherwise.</p></li>
+<li><p><strong>uniq_key</strong> <em>string</em> - the unique key is a string that can be used to group identical meals across days together. In other words, if a user is eating the same breakfast multiple days in a week, all those breakfasts will be represented by separate user meal objects, but they will all have the same uniq_key.</p></li>
+</ul>
+<h4 id='recipe-meal-object'>Recipe Meal Object</h4>
+<p><code>Recipe Meal</code> objects are the children of a <code>User Meal</code> object that define a recipe and number of servings of a recipe to be eaten.</p>
+
+<ul>
+<li><p><strong>id</strong> <em>integer</em> - the unique identifier of the recipe meal.</p></li>
+<li><p><strong>user_meal_id</strong> <em>integer</em> - the ID of the associated user meal.</p></li>
+<li><p><strong>recipe_id</strong> <em>integer</em>  - the ID of the recipe included in this meal.</p></li>
+<li><p><strong>servings</strong> <em>float</em>  - the number of servings for the recipe in this meal.</p></li>
+<li><p><strong>main_dish</strong> <em>boolean</em> - if set to true, this recipe meal should be considered the main dish for its parent user meal. For example, if a lunch was a Turkey Sandwich and an Apple, the Turkey Sandwich would be marked as the main dish. This is helpful for emphasizing the most important part of the meal in your UI.</p></li>
+</ul>
+<h4 id='recipe-object'>Recipe Object</h4>
+<p>The <code>Recipe</code> object represents an <em>unscaled</em> recipe. A recipe has many <code>Ingredient</code> children that define the foods and quantities of those foods in the recipe. A single recipe can be present in many <code>Recipe Meals</code> throughout the plan and when appropriate (most of the time) ingedient quantities should be scaled by the number of servings being used. Note that many &quot;recipes&quot; are actually just single food items like an Apple, so instructions may not be present for all recipes:</p>
+
+<ul>
+<li><p><strong>name</strong> <em>string</em> - the name of the recipe.</p></li>
+<li><p><strong>instructions</strong> <em>string</em> - step-by-step instructions for preparing the recipe. Each step is separated by a newline character (\n). This field can be null or a blank string for simple &quot;recipes&quot; that require no instruction.</p></li>
+<li><p><strong>servings</strong> <em>integer</em> - this is the number of servings the unscaled recipe yields. Use this in combination with the servings attribute of recipe meals to figure out how much a recipe needs to be scaled for a given meal.</p></li>
+<li><p><strong>calories</strong> <em>float</em> - the total number of calories per serving.</p></li>
+<li><p><strong>protein</strong> <em>float</em> - the amount of protein (in grams) per serving.</p></li>
+<li><p><strong>carbs</strong> <em>float</em> - the amount of NET carbohydrates (in grams) per serving. This is carbohydrates with fiber subtracted. To get total carbohydrates, add back the fiber amount. </p></li>
+<li><p><strong>fat</strong> <em>float</em> - the amount of fat (in grams) per serving.</p></li>
+<li><p><strong>fiber</strong> <em>float</em> - the amount of fiber (in grams) per serving.</p></li>
+<li><p><strong>alcohol</strong> <em>float</em> - the amount of alcohol (in grams) per serving.</p></li>
+<li><p><strong>active_time</strong> <em>integer</em> - the active preparation time (in minutes).</p></li>
+<li><p><strong>cook_time</strong> <em>integer</em> - the cooking time (in minutes).</p></li>
+<li><p><strong>serving_name</strong> <em>string</em> - the name used to describe a single serving (e.g., &quot;slice&quot;, &quot;cup&quot;).</p></li>
+<li><p><strong>count_per_serving</strong> <em>integer</em> - the number of items per serving. For example, if the serving for a pizza recipe is &quot;2 slices&quot; the serving name is &quot;slices&quot; and the count per serving would be 2. For most recipes this is 1 or null (which can be treated as the same thing).</p></li>
+<li><p><strong>image</strong> <em>object</em> - the image is an object with the following keys:</p>
+
+<ul>
+<li>  <strong>url</strong> <em>string</em> - the URL of the full resolution image for this recipe</li>
+<li>  <strong>thumb</strong> <em>object</em> - an object with a single key &quot;url&quot; with the url of the thumbnail (200x133px) for this image </li>
+<li>  <strong>medium_thumb</strong> <em>object</em> - an object with a single key &quot;url&quot; with the url of the medium thumbnail (500x333px) for this image </li>
+</ul></li>
+</ul>
+<h4 id='ingredient-object'>Ingredient Object</h4>
+<p>An <code>Ingredient</code> object belongs to a recipe and defines the amount of a food to be included in the parent recipe. Ingredients don&#39;t point directly to <code>Foods</code>, however. Instead they point to a <code>Food Weight</code> and define an amount of that food measurement to be used. For example, an ingredient might have an &quot;amount&quot; of 3 and point to a food weight that represents a cup of diced chicken breast, which means the parent recipe has 3 cups of diced chicken breast.</p>
+
+<ul>
+<li><p><strong>id</strong> <em>integer</em> - the unique identifier of the ingredient.</p></li>
+<li><p><strong>recipe_id</strong> <em>integer</em> - the ID of the recipe to which this ingredient belongs.</p></li>
+<li><p><strong>food_weight_id</strong> <em>integer</em> - the ID of the associated food weight.</p></li>
+<li><p><strong>amount</strong> <em>float</em> - the quantity of the food weight required.</p></li>
+<li><p><strong>modifier</strong> <em>string</em> - any modifier or descriptor for the ingredient (e.g., &quot;chopped&quot;, &quot;fresh&quot;).</p></li>
+<li><p><strong>optional</strong> <em>boolean</em> - indicates whether the ingredient is optional.</p></li>
+</ul>
+<h4 id='food-weight-object'>Food Weight Object</h4>
+<p>A <code>Food Weight</code> represents a specific measurement of a food and its weight in grams. For example, the <code>Food</code> almonds might have food weights for a cup, a single almond, an ounce, a gram, etc. A food weight belongs to a single food, but it can be used by many ingredients. </p>
+
+<ul>
+<li><p><strong>id</strong> <em>integer</em> - the unique identifier of the food weight.</p></li>
+<li><p><strong>food_id</strong> <em>integer</em> - the ID of the associated food item.</p></li>
+<li><p><strong>measurement</strong> <em>string</em> - the unit of measurement for the food weight (e.g., &quot;grams&quot;, &quot;ounces&quot;, &quot;cups&quot;).</p></li>
+<li><p><strong>grams</strong> <em>float</em> - the weight in grams of this quantity/measurement of the associated food.</p></li>
+<li><p><strong>hidden</strong> <em>boolean</em> - indicates whether this measurement should be hidden in recipes. This is usually only true if the &quot;measurement&quot; is redundant with the name of the food. E.g. the Apple food item might have a food weight whose measurement is a &quot;medium apple&quot;, which doesn&#39;t need to be displayed because &quot;1 Apple&quot; is clearer than &quot;1 medium apple Apple&quot;.</p></li>
+</ul>
+<h4 id='food-object'>Food Object</h4>
+<p>A <code>Food</code> object represents a food item like apples, salt, chicken, ground beef, etc. Every food item has 1 or more <code>Food Weights</code>.</p>
+
+<ul>
+<li><p><strong>id</strong> <em>integer</em> - the unique identifier of the food item.</p></li>
+<li><p><strong>common_name</strong> <em>string</em> - the common, human-readable name of the food item. This is what should be displayed to users the vast majority of the time.</p></li>
+<li><p><strong>long_description</strong> <em>string</em> - this is the fully qualified name of the food. For example, for ground beef this might be &quot;ground beef, grade A, 80% lean 20% fat&quot;</p></li>
+<li><p><strong>short_description</strong> <em>string</em> - same as the long description but uses abbreviations.</p></li>
+<li><p><strong>is_liquid</strong> <em>boolean</em> - if true, indicates the food item is a liquid and can/should be measured in milliliters instead of grams.</p></li>
+</ul>
+<h2 id='get-grocery-list'>Get grocery list</h2>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"grocery_list"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2567-07-26"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"needed"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Beverages"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"grocery_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"recipe_meal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="mi">45490308</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490310</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490312</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490314</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490316</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490318</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"food_weight_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15975</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"food_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">14066</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.24</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"recipe_meal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="mi">45490308</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490310</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490312</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490343</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490346</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490349</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490352</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"food_weight_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15537</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"food_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">93634</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.33</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nut and Seed Products"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"grocery_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"recipe_meal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="mi">45490307</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490309</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490311</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490313</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490315</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490317</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"food_weight_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6827</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"food_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12061</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.35</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"recipe_meal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="mi">45490313</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490315</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490317</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"food_weight_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6966</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"food_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12195</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"recipe_meal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="mi">45490356</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490358</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490360</span><span class="p">,</span><span class="w">
+                            </span><span class="mi">45490362</span><span class="w">
+                        </span><span class="p">],</span><span class="w">
+                        </span><span class="nl">"food_weight_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">16153</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"food_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12036</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+            </span><span class="err">//</span><span class="w"> </span><span class="err">Additional</span><span class="w"> </span><span class="err">categories...</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"bought"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves the grocery list associated with a specific meal plan for a given client. The response provides detailed information about the required grocery items, categorized by their respective food groups, along with any items that have already been purchased.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/get_grocery_list</code></p>
+<h3 id='request-body-4'>Request Body</h3>
+<ul>
+<li><p><strong>client_identifier</strong> <em>string or integer</em> (required) - the ID or email address of the client whose grocery list is being requested. Using the client&#39;s ID is recommended because a client&#39;s email is editable whereas its ID will never change.</p></li>
+<li><p><strong>id</strong> <em>integer</em> (required) - the unique identifier of the meal plan for which the grocery list is to be retrieved. This ID corresponds to the <code>id</code> provided in the meal plans list.</p></li>
+</ul>
+<h3 id='response-4'>Response</h3>
+<p>If the request succeeds, the response will be a JSON object containing the following key/value pairs:</p>
+
+<ul>
+<li><strong>grocery_list</strong> <em>object</em> - an object containing the grocery list details, including the start date, needed items, and bought items.</li>
+</ul>
+<h3 id='response-object-definitions-2'>Response Object Definitions</h3><h4 id='grocery-list-object'>Grocery List Object</h4>
+<p>The <code>Grocery List</code> object includes the following attributes:</p>
+
+<ul>
+<li><p><strong>start_date</strong> <em>date string</em> - a YYYY-MM-DD formatted date representing the start date of the meal plan for which the grocery list is generated.</p></li>
+<li><p><strong>needed</strong> <em>array of Category Objects</em> - a list of categories, each containing the grocery items required for that category.</p></li>
+<li><p><strong>bought</strong> <em>array of Category Objects</em> - a list of categories containing grocery items that have already been purchased.</p></li>
+</ul>
+<h4 id='category-object'>Category Object</h4>
+<p>Each <code>Category</code> object includes the following attributes:</p>
+
+<ul>
+<li><p><strong>name</strong> <em>string</em> - the name of the grocery category (e.g., &quot;Beverages&quot;, &quot;Vegetables and Vegetable Products&quot;).</p></li>
+<li><p><strong>grocery_items</strong> <em>array of Grocery Item Objects</em> - a list of grocery items required or bought within this category.</p></li>
+</ul>
+<h4 id='grocery-item-object'>Grocery Item Object</h4>
+<p>Each <code>Grocery Item</code> object includes the following attributes:</p>
+
+<ul>
+<li><p><strong>recipe_meal_ids</strong> <em>array of integers</em> - a list of <code>Recipe Meal</code> IDs that require this grocery item. This helps in identifying which meals utilize the ingredient.</p></li>
+<li><p><strong>food_weight_id</strong> <em>integer</em> - the unique identifier for the food weight, linking to the <code>Food Weight</code> object associated with this grocery list item.</p></li>
+<li><p><strong>food_id</strong> <em>integer</em>  - the unique identifier for the food item, linking to the <code>Food</code> object associated with this grocery list item.</p></li>
+<li><p><strong>amount</strong> <em>float</em> - the quantity of the <code>Food Weight</code> required</p></li>
 </ul>
 
       </div>
