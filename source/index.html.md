@@ -563,6 +563,19 @@ A `User Meal` object is the top-level object representing each meal on a plan. I
 
 - **uniq_key** *string* - the unique key is a string that can be used to group identical meals across days together. In other words, if a user is eating the same breakfast multiple days in a week, all those breakfasts will be represented by separate user meal objects, but they will all have the same uniq_key.
 
+- **off_plan** *boolean* - if true this is an off plan meal, in other words a flexible meal where the user can eat whatever they want as long as it hits certain macronutrient targets. Off plan meals don't have any recipe meals associated with them. Off plan meals also have calorie, protein, carbs, fat, and fiber attributes indicating the macros the user should shoot for. These attributes should be ignored for refular user meals
+
+- **calories** *float* - for off plan meals only, the total number of calories the user should shoot for. For regular user meals this will be null, and the calories and other macros should be calculated from the macros of the recipes in the meal.
+
+- **protein** *float* - for off plan meals only, the total grams of protein the user should shoot for. For regular user meals, the macros should be calculated from the macros of the recipes in the meal.
+
+- **carbs** *float* - for off plan meals only, the total grams of NET carbs the user should shoot for. For regular user meals, the macros should be calculated from the macros of the recipes in the meal.
+
+- **fat** *float* - for off plan meals only, the total grams of fat the user should shoot for. For regular user meals, the macros should be calculated from the macros of the recipes in the meal.
+
+- **fiber** *float* - for off plan meals only, the total grams of fiber the user should shoot for. For regular user meals, the macros should be calculated from the macros of the recipes in the meal.
+
+
 #### Recipe Meal Object
 
 `Recipe Meal` objects are the children of a `User Meal` object that define a recipe and number of servings of a recipe to be eaten.
