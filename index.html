@@ -672,8 +672,7 @@ If any of the below meal plan fields are provided then the basic fields are requ
 <p>If the request succeeds the response will be an object with the following key/value pairs:</p>
 
 <ul>
-<li>  <strong>client_id</strong> <em>integer</em> - the id of the newly created client </li>
-<li>  <strong>mp_pdf_url</strong> <em>string</em> - if generate_meal_plan was set to true, a url where a PDF of the plan can be downloaded will be provided here. A simple GET request to this URL with the appropriate Authorization header (see above) will return the PDF file</li>
+<li>  <strong>success</strong> <em>boolean</em> - will be true if the client was successfully deactivated. This includes cases where the client was already deactivated.</li>
 </ul>
 
 <p>If the request fails, the response will be an object with an error message:</p>
