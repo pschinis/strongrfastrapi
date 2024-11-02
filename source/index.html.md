@@ -342,8 +342,7 @@ This endpoint deactivates an existing client.
 
 If the request succeeds the response will be an object with the following key/value pairs:
 
--   **client_id** *integer* - the id of the newly created client 
--   **mp_pdf_url** *string* - if generate_meal_plan was set to true, a url where a PDF of the plan can be downloaded will be provided here. A simple GET request to this URL with the appropriate Authorization header (see above) will return the PDF file
+-   **success** *boolean* - will be true if the client was successfully deactivated. This includes cases where the client was already deactivated.
 
 If the request fails, the response will be an object with an error message:
 
