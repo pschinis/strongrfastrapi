@@ -19,7 +19,7 @@ meta:
 
 # Introduction
 
-The Strongr Fastr for Professionals API allows enterprise users to programmatically create new clients in Strongr Fastr. Currently, client creation is the only publicly available endpoint. If your business needs something more please contact [philip@strongrfastr.com](mailto:philip@strongrfastr.com). The API is a work in progress and we're happy to help.
+The Strongr Fastr for Professionals API allows enterprise users to programmatically create and deactivate clients in Strongr Fastr as well as get JSON formatted meal plans to display in your own frontend. If your business needs something more please contact [philip@strongrfastr.com](mailto:philip@strongrfastr.com). The API is a work in progress and we're happy to help.
 
 # Authentication
 
@@ -318,7 +318,38 @@ If you provide meal_plan_weekday, diet_type, budget, weekly_variety, complexity_
 
 -   **pick_own_routine** *boolean* (optional) - set to true to have client go through a guided workout selection flow and pick an appopriate routine from Strongr Fastr's database of routines.
 
-# Meal Plans - coming soon
+## Deactivate a Client
+
+> Minimal deactivate client request:
+
+```json
+{  
+    "client_id": 123456
+}
+```
+
+This endpoint deactivates an existing client.
+
+### HTTP Request
+
+`POST https://www.strongrfastr.com/en/api/v1/trainers/deactivate_client`
+
+### Request Body
+
+-   **client_id** *integer* (required) - the id of the client to be deactivated
+
+### Response
+
+If the request succeeds the response will be an object with the following key/value pairs:
+
+-   **client_id** *integer* - the id of the newly created client 
+-   **mp_pdf_url** *string* - if generate_meal_plan was set to true, a url where a PDF of the plan can be downloaded will be provided here. A simple GET request to this URL with the appropriate Authorization header (see above) will return the PDF file
+
+If the request fails, the response will be an object with an error message:
+
+-   **error** *string* - the error message
+
+# Meal Plans
 
 ## List meal plans
 
