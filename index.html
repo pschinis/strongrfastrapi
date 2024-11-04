@@ -330,6 +330,9 @@
                   <li>
                     <a href="#deactivate-a-client" class="toc-h2 toc-link" data-title="Deactivate a Client">Deactivate a Client</a>
                   </li>
+                  <li>
+                    <a href="#reactivate-a-client" class="toc-h2 toc-link" data-title="Reactivate a Client">Reactivate a Client</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -680,6 +683,33 @@ If any of the below meal plan fields are provided then the basic fields are requ
 <ul>
 <li>  <strong>error</strong> <em>string</em> - the error message</li>
 </ul>
+<h2 id='reactivate-a-client'>Reactivate a Client</h2>
+<blockquote>
+<p>Minimal reactivate client request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+    </span><span class="nl">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint reactivates an existing client.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://www.strongrfastr.com/en/api/v1/trainers/reactivate_client</code></p>
+<h3 id='request-body-3'>Request Body</h3>
+<ul>
+<li>  <strong>client_id</strong> <em>integer</em> (required) - the id of the client to be deactivated</li>
+</ul>
+<h3 id='response-3'>Response</h3>
+<p>If the request succeeds the response will be an object with the following key/value pairs:</p>
+
+<ul>
+<li>  <strong>success</strong> <em>boolean</em> - will be true if the client was successfully reactivated. This includes cases where the client was already active.</li>
+</ul>
+
+<p>If the request fails, the response will be an object with an error message:</p>
+
+<ul>
+<li>  <strong>error</strong> <em>string</em> - the error message</li>
+</ul>
 <h1 id='meal-plans'>Meal Plans</h1><h2 id='list-meal-plans'>List meal plans</h2>
 <blockquote>
 <p>Example Response</p>
@@ -705,13 +735,13 @@ If any of the below meal plan fields are provided then the basic fields are requ
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint will return metadata for all meal plans for a given client. The metadata includes the id of each meal plan which can be used to retrieve the full plan and its grocery list. The list will be sorted in ascending order of the &quot;start date&quot; of each meal plan.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
+<h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/list</code></p>
-<h3 id='request-body-3'>Request Body</h3>
+<h3 id='request-body-4'>Request Body</h3>
 <ul>
 <li>  <strong>client_identifier</strong> <em>string or integer</em> (required) - the id or email address of the client whose list of meal plans is being requested. Using the client&#39;s ID is recommended because a client&#39;s email is editable whereas its ID will never change.</li>
 </ul>
-<h3 id='response-3'>Response</h3>
+<h3 id='response-4'>Response</h3>
 <p>If the request succeeds the response will be a JSON object with the following key/value pairs:</p>
 
 <ul>
@@ -838,16 +868,16 @@ If any of the below meal plan fields are provided then the basic fields are requ
 <p>Meal plans are represented by many types of interrelated objects, below is an entity relationship diagram illustrating the general structure of a meal plan. Find more information about each type of object in the <a href="#mp-resp-objs-defs">Response Object Definitions</a> section.</p>
 
 <p><img src="images/erd-8f72ae24.svg" alt="Entity Relationship Diagram" /></p>
-<h3 id='http-request-4'>HTTP Request</h3>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/get</code></p>
-<h3 id='request-body-4'>Request Body</h3>
+<h3 id='request-body-5'>Request Body</h3>
 <ul>
 <li><p><strong>client_identifier</strong> <em>string or integer</em> (required)<br>
 The ID or email address of the client whose meal plan is being requested. Using the client&#39;s ID is recommended because a client&#39;s email is editable whereas its ID will never change.</p></li>
 <li><p><strong>id</strong> <em>integer</em> (required)<br>
 The unique identifier of the meal plan to retrieve. This ID corresponds to the <code>id</code> provided in the meal plans list.</p></li>
 </ul>
-<h3 id='response-4'>Response</h3>
+<h3 id='response-5'>Response</h3>
 <p>If the request succeeds, the response will be a JSON object containing the following key/value pairs:</p>
 
 <ul>
@@ -1052,14 +1082,14 @@ The unique identifier of the meal plan to retrieve. This ID corresponds to the <
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>This endpoint retrieves the grocery list associated with a specific meal plan for a given client. The response provides detailed information about the required grocery items, categorized by their respective food groups, along with any items that have already been purchased.</p>
-<h3 id='http-request-5'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>GET https://www.strongrfastr.com/en/api/v1/meal_plans/get_grocery_list</code></p>
-<h3 id='request-body-5'>Request Body</h3>
+<h3 id='request-body-6'>Request Body</h3>
 <ul>
 <li><p><strong>client_identifier</strong> <em>string or integer</em> (required) - the ID or email address of the client whose grocery list is being requested. Using the client&#39;s ID is recommended because a client&#39;s email is editable whereas its ID will never change.</p></li>
 <li><p><strong>id</strong> <em>integer</em> (required) - the unique identifier of the meal plan for which the grocery list is to be retrieved. This ID corresponds to the <code>id</code> provided in the meal plans list.</p></li>
 </ul>
-<h3 id='response-5'>Response</h3>
+<h3 id='response-6'>Response</h3>
 <p>If the request succeeds, the response will be a JSON object containing the following key/value pairs:</p>
 
 <ul>
