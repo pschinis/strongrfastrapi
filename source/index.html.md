@@ -348,6 +348,36 @@ If the request fails, the response will be an object with an error message:
 
 -   **error** *string* - the error message
 
+## Reactivate a Client
+
+> Minimal reactivate client request:
+
+```json
+{  
+    "client_id": 123456
+}
+```
+
+This endpoint reactivates an existing client.
+
+### HTTP Request
+
+`POST https://www.strongrfastr.com/en/api/v1/trainers/reactivate_client`
+
+### Request Body
+
+-   **client_id** *integer* (required) - the id of the client to be deactivated
+
+### Response
+
+If the request succeeds the response will be an object with the following key/value pairs:
+
+-   **success** *boolean* - will be true if the client was successfully reactivated. This includes cases where the client was already active.
+
+If the request fails, the response will be an object with an error message:
+
+-   **error** *string* - the error message
+
 # Meal Plans
 
 ## List meal plans
